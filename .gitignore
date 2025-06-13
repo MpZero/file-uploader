@@ -1,0 +1,6 @@
+node_modules
+.env
+/node_modules/.prisma/client
+generateKeypair.js
+id_rsa_priv.pem
+id_rsa_pub.pem

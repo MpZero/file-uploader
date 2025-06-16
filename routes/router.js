@@ -7,6 +7,7 @@ const {
   getLogIn,
   postLogIn,
   getSignUp,
+  postSignUp,
   getProtected,
 } = require("../controllers/appController");
 
@@ -22,6 +23,7 @@ router.post("/log-in", postLogIn);
 // );
 
 router.get("/sign-up", getSignUp);
+router.post("/sign-up", postSignUp);
 
 router.use(
   passport.authenticate("session", {

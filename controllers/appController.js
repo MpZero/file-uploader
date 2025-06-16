@@ -1,5 +1,5 @@
 // const { genPassword, validPassword } = require("../utils/passwordUtils");
-const { findUser } = require("../queries/queries");
+const { findUser, createUser } = require("../queries/queries");
 function getIndex(req, res) {
   res.render("index");
 }
@@ -19,6 +19,28 @@ function getSignUp(req, res) {
   });
 }
 
+async function postSignUp(req, res) {
+  console.log(req.body);
+  const { username, password, confirmPassword } = req.body;
+
+  try {
+    if (password !== confirmPassword) {
+      return res.render("signUp", {
+        title: "Sign-Up",
+        errors: [{ msg: "Passwords do not match" }],
+      });
+    }
+
+    await createUser(username, password);
+    return res.redirect("/log-in");
+  } catch (err) {
+    console.error("Error creating user", err);
+    next(err);
+  }
+
+  return res.redirect("/");
+}
+
 function getProtected(req, res) {
   res.render("protected", {
     title: "Protected Page",
@@ -30,5 +52,6 @@ module.exports = {
   getLogIn,
   postLogIn,
   getSignUp,
+  postSignUp,
   getProtected,
 };

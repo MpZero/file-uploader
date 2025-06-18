@@ -1,22 +1,40 @@
-const expressSession = require("express-session");
-const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
-const { PrismaClient } = require("@prisma/client");
+const LocalStrategy = require("passport-local").Strategy;
 const passport = require("passport");
+const { validPassword } = require("../utils/passwordUtils");
+const { PrismaClient } = require("@prisma/client");
+const { findUser } = require("../queries/queries");
 
-require("dotenv").config();
+const prisma = new PrismaClient();
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
 
-passport.use(
-  expressSession({
-    cookie: {
-      maxAge: 7 * 24 * 60 * 60 * 1000, // ms
-    },
-    secret: "a santa at nasa",
-    resave: true,
-    saveUninitialized: true,
-    store: new PrismaSessionStore(new PrismaClient(), {
-      checkPeriod: 2 * 60 * 1000, //ms
-      dbRecordIdIsSessionId: true,
-      dbRecordIdFunction: undefined,
-    }),
-  })
-);
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await prisma.user.findUnique({ where: { id } });
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
+
+module.exports = (passport) => {
+  passport.use(
+    new LocalStrategy(async (username, password, done) => {
+      try {
+        console.log(`passport`);
+
+        const user = await findUser(username);
+        if (!user) return done(null, false, { message: "Incorrect username" });
+
+        const isValid = await validPassword(password, user.password);
+        if (!isValid)
+          return done(null, false, { message: "Incorrect password" });
+
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
+    })
+  );
+};

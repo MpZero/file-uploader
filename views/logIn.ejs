@@ -9,6 +9,7 @@
     <main>
       <h1>Log In</h1>
       <div>
+        <%- include('partials/errors') %>
         <form action="/log-in" method="POST">
           <label for="username">Username: </label>
           <input type="text" name="username" id="username" required />

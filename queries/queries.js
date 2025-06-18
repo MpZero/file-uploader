@@ -2,9 +2,13 @@ const { PrismaClient } = require("@prisma/client");
 const { genPassword } = require("../utils/passwordUtils");
 const prisma = new PrismaClient();
 
-async function findUser(id) {
-  const findUser = await prisma.user.findMany({});
-  console.log(findUser);
+async function findUser(username) {
+  const user = await prisma.user.findUnique({
+    where: {
+      username: username,
+    },
+  });
+  return user;
 }
 
 async function createUser(username, password) {

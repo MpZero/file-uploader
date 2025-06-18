@@ -4,10 +4,11 @@ const path = require("node:path");
 const app = express();
 const port = 8000;
 const router = require("./routes/router");
-// const passport = require("passport");
-// const session = require("express-session");
-
-// const session = require("express-session");
+const passport = require("passport");
+const session = require("express-session");
+const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -17,18 +18,24 @@ app.use(express.static(assetsPath));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// require("./passport/passport")(passport);
-// app.use(passport.initialize());
+app.use(
+  session({
+    cookie: {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    },
+    secret: process.env.SESSION_SECRET || "secret",
+    resave: false,
+    saveUninitialized: false,
+    store: new PrismaSessionStore(prisma, {
+      checkPeriod: 2 * 60 * 1000,
+      dbRecordIdIsSessionId: true,
+    }),
+  })
+);
 
-// app.use(
-//   session({
-//     secret: "keyboard cat",
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// );
-// app.use(passport.authenticate("session"));
-
+app.use(passport.initialize());
+app.use(passport.session());
+require("./passport/passport")(passport);
 app.use("/", router);
 
 app.listen(process.env.PORT || 8000, () => {

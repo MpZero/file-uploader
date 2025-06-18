@@ -12,25 +12,21 @@ const {
 } = require("../controllers/appController");
 
 router.get("/", getIndex);
+
 router.get("/log-in", getLogIn);
 router.post("/log-in", postLogIn);
-// router.post(
-//   "/login/password",
-//   passport.authenticate("local", {
-//     successRedirect: "/protected",
-//     failureRedirect: "/login",
-//   })
-// );
 
-router.get("/sign-up", getSignUp);
-router.post("/sign-up", postSignUp);
+router.get("/sign-up", ensureAuthenticated, getSignUp);
+router.post("/sign-up", ensureAuthenticated, postSignUp);
 
-router.use(
-  passport.authenticate("session", {
-    session: false,
-    failureRedirect: "/",
-  })
-);
-router.get("/protected", getProtected);
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) return next();
+  return res.json({ unathorized: "unauthorized" });
+  // res.redirect("/log-in");
+}
+
+router.get("/protected", ensureAuthenticated, getProtected);
+
+// router.get("/protected", getProtected);
 
 module.exports = router;

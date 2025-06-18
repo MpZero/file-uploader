@@ -1,16 +1,41 @@
-// const { genPassword, validPassword } = require("../utils/passwordUtils");
 const { findUser, createUser } = require("../queries/queries");
+const { validPassword } = require("../utils/passwordUtils");
 function getIndex(req, res) {
   res.render("index");
 }
 function getLogIn(req, res) {
   res.render("logIn", {
-    title: "Log-In",
+    title: "Log-in",
   });
 }
 
-async function postLogIn(req, res) {
-  findUser();
+async function postLogIn(req, res, next) {
+  try {
+    const { username, password } = req.body;
+    const user = await findUser(username);
+
+    if (!user) {
+      return res.render("logIn", {
+        title: "Log-in",
+        errors: [{ msg: "User does not exist" }],
+      });
+    }
+
+    const isValid = await validPassword(password, user.password);
+    if (!isValid) {
+      return res.render("logIn", {
+        title: "Log-in",
+        errors: [{ msg: "Invalid password" }],
+      });
+    }
+
+    req.login(user, (err) => {
+      if (err) return next(err);
+      return res.redirect("/protected");
+    });
+  } catch (err) {
+    return next(err);
+  }
 }
 
 function getSignUp(req, res) {
@@ -20,7 +45,7 @@ function getSignUp(req, res) {
 }
 
 async function postSignUp(req, res) {
-  console.log(req.body);
+  // console.log(req.body);
   const { username, password, confirmPassword } = req.body;
 
   try {

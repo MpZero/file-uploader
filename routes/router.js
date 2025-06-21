@@ -9,6 +9,7 @@ const {
   getSignUp,
   postSignUp,
   getProtected,
+  logOut,
 } = require("../controllers/appController");
 
 router.get("/", getIndex);
@@ -16,8 +17,8 @@ router.get("/", getIndex);
 router.get("/log-in", getLogIn);
 router.post("/log-in", postLogIn);
 
-router.get("/sign-up", ensureAuthenticated, getSignUp);
-router.post("/sign-up", ensureAuthenticated, postSignUp);
+router.get("/sign-up", getSignUp);
+router.post("/sign-up", postSignUp);
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) return next();
@@ -27,6 +28,6 @@ function ensureAuthenticated(req, res, next) {
 
 router.get("/protected", ensureAuthenticated, getProtected);
 
-// router.get("/protected", getProtected);
+router.get("/log-out", logOut);
 
 module.exports = router;

@@ -72,6 +72,14 @@ function getProtected(req, res) {
   });
 }
 
+function logOut(req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+}
 module.exports = {
   getIndex,
   getLogIn,
@@ -79,4 +87,5 @@ module.exports = {
   getSignUp,
   postSignUp,
   getProtected,
+  logOut,
 };

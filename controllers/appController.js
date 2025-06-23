@@ -10,6 +10,8 @@ function getLogIn(req, res) {
 }
 
 async function postLogIn(req, res, next) {
+  console.log(req.body);
+
   try {
     const { username, password } = req.body;
     const user = await findUser(username);
@@ -71,6 +73,16 @@ function getProtected(req, res) {
     title: "Protected Page",
   });
 }
+function getUpload(req, res) {
+  res.render("upload", {
+    title: "Upload a File",
+  });
+}
+
+function postUpload(req, res) {
+  console.log("upload succesfully");
+  res.json(req.file);
+}
 
 function logOut(req, res, next) {
   req.logout(function (err) {
@@ -86,6 +98,8 @@ module.exports = {
   postLogIn,
   getSignUp,
   postSignUp,
+  getUpload,
+  postUpload,
   getProtected,
   logOut,
 };

@@ -10,7 +10,24 @@ const {
   postSignUp,
   getProtected,
   logOut,
+  getUpload,
+  postUpload,
 } = require("../controllers/appController");
+const multer = require("multer");
+// const upload = multer({ dest: "uploads/" });
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
+/////////ROUTES////////////
 
 router.get("/", getIndex);
 
@@ -27,6 +44,8 @@ function ensureAuthenticated(req, res, next) {
 }
 
 router.get("/protected", ensureAuthenticated, getProtected);
+router.get("/upload", ensureAuthenticated, getUpload);
+router.post("/upload", ensureAuthenticated, upload.single("file"), postUpload);
 
 router.get("/log-out", logOut);
 

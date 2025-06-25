@@ -12,6 +12,8 @@ const {
   logOut,
   getUpload,
   postUpload,
+  getFolders,
+  postFolders,
 } = require("../controllers/appController");
 const multer = require("multer");
 // const upload = multer({ dest: "uploads/" });
@@ -46,6 +48,9 @@ function ensureAuthenticated(req, res, next) {
 router.get("/protected", ensureAuthenticated, getProtected);
 router.get("/upload", ensureAuthenticated, getUpload);
 router.post("/upload", ensureAuthenticated, upload.single("file"), postUpload);
+
+router.get("/folders", ensureAuthenticated, getFolders);
+// router.post("/folders", ensureAuthenticated, postFolders);
 
 router.get("/log-out", logOut);
 

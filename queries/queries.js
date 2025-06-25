@@ -25,4 +25,16 @@ async function createUser(username, password) {
   }
 }
 
-module.exports = { findUser, createUser };
+async function readFolders(id) {
+  try {
+    const folders = await prisma.folder.findMany({
+      where: { userId: id },
+    });
+
+    return folders;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+module.exports = { findUser, createUser, readFolders };

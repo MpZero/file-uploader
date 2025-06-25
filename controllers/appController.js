@@ -1,4 +1,4 @@
-const { findUser, createUser } = require("../queries/queries");
+const { findUser, createUser, readFolders } = require("../queries/queries");
 const { validPassword } = require("../utils/passwordUtils");
 function getIndex(req, res) {
   res.render("index");
@@ -10,7 +10,7 @@ function getLogIn(req, res) {
 }
 
 async function postLogIn(req, res, next) {
-  console.log(req.body);
+  // console.log(req.body);
 
   try {
     const { username, password } = req.body;
@@ -84,6 +84,32 @@ function postUpload(req, res) {
   res.json(req.file);
 }
 
+async function getFolders(req, res) {
+  try {
+    const username = req.user.username;
+    const id = req.user.id;
+    const folders = await readFolders(id);
+    // console.log(`folders`, folders);
+
+    if (folders.length === 0) {
+      res.render("folders", {
+        title: `${username}'s Folders`,
+        folders: folders,
+        errors: [{ msg: "No folders found!" }],
+      });
+      return;
+    }
+    res.render("folders", {
+      title: `${username}'s Folders`,
+      folders: folders,
+    });
+  } catch (err) {
+    console.error("Error getting folders", err);
+
+    next(err);
+  }
+}
+
 function logOut(req, res, next) {
   req.logout(function (err) {
     if (err) {
@@ -101,5 +127,6 @@ module.exports = {
   getUpload,
   postUpload,
   getProtected,
+  getFolders,
   logOut,
 };

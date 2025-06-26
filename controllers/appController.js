@@ -3,11 +3,14 @@ const {
   createUser,
   readFolders,
   createFolders,
+  deleteFolder,
 } = require("../queries/queries");
 const { validPassword } = require("../utils/passwordUtils");
+
 function getIndex(req, res) {
   res.render("index");
 }
+
 function getLogIn(req, res) {
   res.render("logIn", {
     title: "Log-in",
@@ -78,6 +81,7 @@ function getProtected(req, res) {
     title: "Protected Page",
   });
 }
+
 function getUpload(req, res) {
   res.render("upload", {
     title: "Upload a File",
@@ -133,6 +137,21 @@ async function postFolders(req, res) {
   }
 }
 
+async function getDeleteFolder(req, res) {
+  try {
+    console.log(req.params.id);
+    const folderId = req.params.id;
+    await deleteFolder(parseInt(folderId));
+    res.redirect("/folders");
+  } catch (err) {
+    console.error("Error deleting folder", err);
+    req.flash("error", "Folder already deleted or Folder doesn't exist");
+    res.redirect("/folders");
+  }
+}
+
+// async function deleteAllFiles(req, res) {}
+
 function logOut(req, res, next) {
   req.logout(function (err) {
     if (err) {
@@ -152,5 +171,6 @@ module.exports = {
   getProtected,
   getFolders,
   postFolders,
+  getDeleteFolder,
   logOut,
 };

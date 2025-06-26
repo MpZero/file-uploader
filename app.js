@@ -6,6 +6,7 @@ const port = 8000;
 const router = require("./routes/router");
 const passport = require("passport");
 const session = require("express-session");
+const flash = require("connect-flash");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
@@ -36,6 +37,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 require("./passport/passport")(passport);
+app.use(flash());
 app.use("/", router);
 
 app.listen(process.env.PORT || 8000, () => {

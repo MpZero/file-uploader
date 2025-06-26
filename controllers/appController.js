@@ -1,4 +1,9 @@
-const { findUser, createUser, readFolders } = require("../queries/queries");
+const {
+  findUser,
+  createUser,
+  readFolders,
+  createFolders,
+} = require("../queries/queries");
 const { validPassword } = require("../utils/passwordUtils");
 function getIndex(req, res) {
   res.render("index");
@@ -46,7 +51,7 @@ function getSignUp(req, res) {
   });
 }
 
-async function postSignUp(req, res) {
+async function postSignUp(req, res, next) {
   // console.log(req.body);
   const { username, password, confirmPassword } = req.body;
 
@@ -84,7 +89,7 @@ function postUpload(req, res) {
   res.json(req.file);
 }
 
-async function getFolders(req, res) {
+async function getFolders(req, res, next) {
   try {
     const username = req.user.username;
     const id = req.user.id;
@@ -99,14 +104,32 @@ async function getFolders(req, res) {
       });
       return;
     }
+
     res.render("folders", {
       title: `${username}'s Folders`,
       folders: folders,
+      errors: [{ msg: req.flash("error") }],
     });
   } catch (err) {
     console.error("Error getting folders", err);
 
-    next(err);
+    return next(err);
+  }
+}
+
+async function postFolders(req, res) {
+  try {
+    const userId = req.user.id;
+    const folderName = req.body.folderName;
+    // console.log(userId, folderName);
+
+    const folders = await createFolders(userId, folderName);
+    // console.log(`folders`, folders);
+    res.redirect("/folders");
+  } catch (err) {
+    console.error("Error creating folder", err);
+    req.flash("error", "Folder already exists");
+    res.redirect("/folders");
   }
 }
 
@@ -128,5 +151,6 @@ module.exports = {
   postUpload,
   getProtected,
   getFolders,
+  postFolders,
   logOut,
 };

@@ -37,4 +37,19 @@ async function readFolders(id) {
   }
 }
 
-module.exports = { findUser, createUser, readFolders };
+async function createFolders(userId, folderName, next) {
+  try {
+    const folder = await prisma.folder.create({
+      data: {
+        userId: userId,
+        name: folderName,
+      },
+    });
+    // return folder;
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+}
+
+module.exports = { findUser, createUser, readFolders, createFolders };

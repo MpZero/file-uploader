@@ -47,10 +47,10 @@ function ensureAuthenticated(req, res, next) {
 
 router.get("/protected", ensureAuthenticated, getProtected);
 router.get("/upload", ensureAuthenticated, getUpload);
-router.post("/upload", ensureAuthenticated, upload.single("file"), postUpload);
+router.post("/upload", upload.single("file"), postUpload);
 
 router.get("/folders", ensureAuthenticated, getFolders);
-// router.post("/folders", ensureAuthenticated, postFolders);
+router.post("/folders", postFolders);
 
 router.get("/log-out", logOut);
 

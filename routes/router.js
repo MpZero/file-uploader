@@ -15,6 +15,8 @@ const {
   getFolders,
   postFolders,
   getDeleteFolder,
+  // getUpdateFolder,
+  getFolderDetails,
 } = require("../controllers/appController");
 const multer = require("multer");
 // const upload = multer({ dest: "uploads/" });
@@ -53,7 +55,8 @@ router.post("/upload", upload.single("file"), postUpload);
 router.get("/folders", ensureAuthenticated, getFolders);
 router.post("/folders", postFolders);
 
-router.get("/folders/:id", ensureAuthenticated, getDeleteFolder);
+router.get("/folders/:id", ensureAuthenticated, getFolderDetails);
+router.get("/folders/:id/delete", ensureAuthenticated, getDeleteFolder);
 
 router.get("/log-out", logOut);
 

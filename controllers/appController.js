@@ -4,6 +4,8 @@ const {
   readFolders,
   createFolders,
   deleteFolder,
+  readFolder,
+  // findFolder,
 } = require("../queries/queries");
 const { validPassword } = require("../utils/passwordUtils");
 
@@ -41,7 +43,7 @@ async function postLogIn(req, res, next) {
 
     req.login(user, (err) => {
       if (err) return next(err);
-      return res.redirect("/protected");
+      return res.redirect("/folders");
     });
   } catch (err) {
     return next(err);
@@ -139,7 +141,7 @@ async function postFolders(req, res) {
 
 async function getDeleteFolder(req, res) {
   try {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     const folderId = req.params.id;
     await deleteFolder(parseInt(folderId));
     res.redirect("/folders");
@@ -150,7 +152,22 @@ async function getDeleteFolder(req, res) {
   }
 }
 
-// async function deleteAllFiles(req, res) {}
+async function getFolderDetails(req, res) {
+  try {
+    const folder = await readFolder(parseInt(req.params.id));
+    // console.log(`getFolderDetails`, folder);
+    // console.log(folder.files);
+    res.render("folderDetails", {
+      title: folder.name,
+      folder: folder,
+      files: folder.files,
+    });
+  } catch (err) {
+    console.error("Error getting folder details", err);
+    req.flash("error", "Unable to access folder details");
+    res.redirect("/folders");
+  }
+}
 
 function logOut(req, res, next) {
   req.logout(function (err) {
@@ -172,5 +189,6 @@ module.exports = {
   getFolders,
   postFolders,
   getDeleteFolder,
+  getFolderDetails,
   logOut,
 };

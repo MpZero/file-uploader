@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= folder.name %></h1>
+    <%- include('partials/errors') %>
+
+    <ul>
+      <li>Created: <%= folder.createdAt.toDateString() %></a></li>
+      <li><a href="/folders/<%= folder.id%>/delete">Delete this folder</a></li>
+      <% if(files.length !== 0) { %>
+      <ul>Files:
+        <% files.map((data) => { %>
+          <li><%= data.id %></li>
+          <li><%= data.filename %></li>
+          <li><%=data.path %></li>
+          <li><%=data.createdAt.toDateString() %></li>
+       <%}) %>
+      </ul>
+     <% } %>
+      
+    </ul>
+      <a href="/folders">Back</a>
+
+
+    
+  </body>
+</html>

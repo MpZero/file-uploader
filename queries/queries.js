@@ -30,6 +30,7 @@ async function readFolders(id) {
     const folders = await prisma.folder.findMany({
       where: { userId: id },
     });
+    console.log(folders);
 
     return folders;
   } catch (error) {
@@ -37,27 +38,27 @@ async function readFolders(id) {
   }
 }
 
-// async function findFolder(id) {
-//   try {
-//     const folder = await prisma.folder.findUnique({
-//       where: { userId: id },
-//     });
+async function readFolder(id) {
+  try {
+    const folder = await prisma.folder.findUnique({
+      where: { id: id },
+      include: { files: true },
+    });
 
-//     return folders;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+    return folder;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 async function createFolders(userId, folderName, next) {
   try {
-    const folder = await prisma.folder.create({
+    await prisma.folder.create({
       data: {
         userId: userId,
         name: folderName,
       },
     });
-    // return folder;
   } catch (error) {
     console.log(error);
     next(error);
@@ -70,30 +71,32 @@ async function deleteFolder(id, next) {
       where: {
         id: id,
       },
+      include: { files: true },
     });
     return;
   } catch (error) {
     console.log(error);
-    next(error);
   }
 }
 
-async function deleteFiles(id, next) {
-  try {
-    await prisma.file.deleteMany({
-      where: { folderId: id },
-    });
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-}
+// async function deleteFiles(id, next) {
+//   try {
+//     await prisma.file.deleteMany({
+//       where: { folderId: id },
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     next(error);
+//   }
+// }
 
 module.exports = {
   findUser,
   createUser,
   readFolders,
   createFolders,
-  deleteFiles,
+  // deleteFiles,
   deleteFolder,
+  // findFolder,
+  readFolder,
 };

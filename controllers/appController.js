@@ -5,6 +5,7 @@ const {
   createFolders,
   deleteFolder,
   readFolder,
+  deleteFile,
   // findFolder,
 } = require("../queries/queries");
 const { validPassword } = require("../utils/passwordUtils");
@@ -169,6 +170,22 @@ async function getFolderDetails(req, res) {
   }
 }
 
+async function getFileDelete(req, res) {
+  // console.log(req.user);
+  // console.log(req.params);
+
+  try {
+    const folderId = req.params.folderId;
+    const fileId = req.params.id;
+    await deleteFile(parseInt(fileId));
+    res.redirect(`/folders/${folderId}`);
+  } catch (err) {
+    console.error("Error deleting file", err);
+    req.flash("error", "File already delete or File doesn't exist");
+    res.redirect(`/folders/${folderId}`);
+  }
+}
+
 function logOut(req, res, next) {
   req.logout(function (err) {
     if (err) {
@@ -190,5 +207,6 @@ module.exports = {
   postFolders,
   getDeleteFolder,
   getFolderDetails,
+  getFileDelete,
   logOut,
 };

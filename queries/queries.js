@@ -79,24 +79,24 @@ async function deleteFolder(id, next) {
   }
 }
 
-// async function deleteFiles(id, next) {
-//   try {
-//     await prisma.file.deleteMany({
-//       where: { folderId: id },
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     next(error);
-//   }
-// }
+async function deleteFile(id, next) {
+  try {
+    await prisma.file.delete({
+      where: { id: id },
+    });
+    return;
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+}
 
 module.exports = {
   findUser,
   createUser,
   readFolders,
   createFolders,
-  // deleteFiles,
+  deleteFile,
   deleteFolder,
-  // findFolder,
   readFolder,
 };

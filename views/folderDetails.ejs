@@ -15,10 +15,11 @@
       <% if(files.length !== 0) { %>
       <ul>Files:
         <% files.map((data) => { %>
-          <li><%= data.id %></li>
+          <!-- <li><%= data.id %></li> -->
           <li><%= data.filename %></li>
           <li><%=data.path %></li>
           <li><%=data.createdAt.toDateString() %></li>
+          <li><a href="/folders/<%=folder.id%>/file/<%= data.id%>/delete">Remove</a></li>
        <%}) %>
       </ul>
      <% } %>

@@ -17,6 +17,8 @@ const {
   getDeleteFolder,
   getUpdateFolder,
   postUpdateFolder,
+  getUpdateFile,
+  postUpdateFile,
   getFileDelete,
   getFolderDetails,
 } = require("../controllers/appController");
@@ -63,6 +65,12 @@ router.post("/folders/:id/update", ensureAuthenticated, postUpdateFolder);
 
 router.get("/folders/:id/delete", ensureAuthenticated, getDeleteFolder);
 
+router.get("/folders/:id/file/:id/update", ensureAuthenticated, getUpdateFile);
+router.post(
+  "/folders/:id/file/:id/update",
+  ensureAuthenticated,
+  postUpdateFile
+);
 router.get(
   "/folders/:folderId/file/:id/delete",
   ensureAuthenticated,

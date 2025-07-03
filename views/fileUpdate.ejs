@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <%- include('partials/errors') %>
+
+    <h2>Update File</h2>
+    <form
+      action="/folders/<%=file.folderId %>/file/<%=file.id %>/update"
+      method="post"
+    >
+      <label for="newName"> </label>
+      <input
+        type="text"
+        placeholder="New file name"
+        name="newName"
+        id="newName"
+        required
+      />
+      <button type="submit">Update file</button>
+    </form>
+    <a href="/folders/<%=file.folderId %>">Back</a>
+  </body>
+</html>

@@ -6,6 +6,8 @@ const {
   deleteFolder,
   readFolder,
   updateFolder,
+  updateFile,
+  readFile,
   deleteFile,
 } = require("../queries/queries");
 const { validPassword } = require("../utils/passwordUtils");
@@ -202,6 +204,40 @@ async function postUpdateFolder(req, res) {
   }
 }
 
+async function getUpdateFile(req, res) {
+  const fileId = req.params.id;
+  const file = await readFile(parseInt(fileId));
+  // console.log(file);
+
+  try {
+    res.render("fileUpdate", {
+      title: file.filename,
+      file: file,
+      errors: [{ msg: req.flash("error") }],
+    });
+  } catch (err) {
+    console.error("Error updating file", err);
+    req.flash("error", "Unable to update file");
+    res.redirect(`/folders/${file.folderId}`);
+  }
+}
+
+async function postUpdateFile(req, res) {
+  const fileId = req.params.id;
+  const newName = req.body.newName;
+  const file = await readFile(parseInt(fileId));
+  const folderId = file.folderId;
+
+  try {
+    await updateFile(parseInt(fileId), newName);
+    res.redirect(`/folders/${folderId}/file/${fileId}/update`);
+  } catch (err) {
+    console.error("Error updating file", err);
+    req.flash("error", "File name already exists");
+    res.redirect(`/folders/${folderId}/file/${fileId}/update`);
+  }
+}
+
 async function getFileDelete(req, res) {
   // console.log(req.user);
   // console.log(req.params);
@@ -241,6 +277,8 @@ module.exports = {
   postUpdateFolder,
   getDeleteFolder,
   getFolderDetails,
+  getUpdateFile,
+  postUpdateFile,
   getFileDelete,
   logOut,
 };

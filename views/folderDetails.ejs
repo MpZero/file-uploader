@@ -20,6 +20,7 @@
           <li><%= data.filename %></li>
           <li><%=data.path %></li>
           <li><%=data.createdAt.toDateString() %></li>
+          <li><a href="/folders/<%=folder.id%>/file/<%= data.id%>/update">Update File</a></li>
           <li><a href="/folders/<%=folder.id%>/file/<%= data.id%>/download">Download File</a></li>
           <li><a href="/folders/<%=folder.id%>/file/<%= data.id%>/delete">Remove</a></li>
        <%}) %>

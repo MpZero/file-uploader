@@ -15,7 +15,8 @@ const {
   getFolders,
   postFolders,
   getDeleteFolder,
-  // getUpdateFolder,
+  getUpdateFolder,
+  postUpdateFolder,
   getFileDelete,
   getFolderDetails,
 } = require("../controllers/appController");
@@ -56,7 +57,10 @@ router.post("/upload", upload.single("file"), postUpload);
 router.get("/folders", ensureAuthenticated, getFolders);
 router.post("/folders", postFolders);
 
-router.get("/folders/:id", ensureAuthenticated, getFolderDetails);
+router.get("/folders/:id/", ensureAuthenticated, getFolderDetails);
+router.get("/folders/:id/update", ensureAuthenticated, getUpdateFolder);
+router.post("/folders/:id/update", ensureAuthenticated, postUpdateFolder);
+
 router.get("/folders/:id/delete", ensureAuthenticated, getDeleteFolder);
 
 router.get(

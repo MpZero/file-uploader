@@ -5,8 +5,8 @@ const {
   createFolders,
   deleteFolder,
   readFolder,
+  updateFolder,
   deleteFile,
-  // findFolder,
 } = require("../queries/queries");
 const { validPassword } = require("../utils/passwordUtils");
 
@@ -170,6 +170,38 @@ async function getFolderDetails(req, res) {
   }
 }
 
+async function getUpdateFolder(req, res) {
+  const folderId = req.params.id;
+  const folder = await readFolder(parseInt(req.params.id));
+  // console.log({ folderId, folder });
+  try {
+    res.render("folderUpdate", {
+      title: folder.name,
+      folder: folder,
+      errors: [{ msg: req.flash("error") }],
+    });
+  } catch (err) {
+    console.error("Error updating folder", err);
+    req.flash("error", "Unable to update folder");
+    res.redirect(`/folders/${folderId}`);
+  }
+}
+
+async function postUpdateFolder(req, res) {
+  const folderId = req.params.id;
+  const newName = req.body.newName;
+  // console.log(folderId, newName);
+
+  try {
+    await updateFolder(parseInt(req.params.id), newName);
+    res.redirect(`/folders/${folderId}`);
+  } catch (err) {
+    console.error("Error updating folder", err);
+    req.flash("error", "Folder name already exists");
+    res.redirect(`/folders/${folderId}/update`);
+  }
+}
+
 async function getFileDelete(req, res) {
   // console.log(req.user);
   // console.log(req.params);
@@ -205,6 +237,8 @@ module.exports = {
   getProtected,
   getFolders,
   postFolders,
+  getUpdateFolder,
+  postUpdateFolder,
   getDeleteFolder,
   getFolderDetails,
   getFileDelete,

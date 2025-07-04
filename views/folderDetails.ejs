@@ -11,6 +11,7 @@
 
     <ul>
       <li>Created: <%= folder.createdAt.toDateString() %></a></li>
+      <li><a href="/folders/<%= folder.id%>/upload">Upload a file</a></li>
       <li><a href="/folders/<%= folder.id%>/update">Update this folder</a></li>
       <li><a href="/folders/<%= folder.id%>/delete">Delete this folder</a></li>
       <% if(files.length !== 0) { %>
@@ -18,7 +19,8 @@
         <% files.map((data) => { %>
           <!-- <li><%= data.id %></li> -->
           <li><%= data.filename %></li>
-          <li><%=data.path %></li>
+          <li><%=data.destination %></li>
+          <li><%=data.size%> kb </li>
           <li><%=data.createdAt.toDateString() %></li>
           <li><a href="/folders/<%=folder.id%>/file/<%= data.id%>/update">Update File</a></li>
           <li><a href="/folders/<%=folder.id%>/file/<%= data.id%>/download">Download File</a></li>

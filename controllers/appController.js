@@ -6,6 +6,7 @@ const {
   deleteFolder,
   readFolder,
   updateFolder,
+  createFile,
   updateFile,
   readFile,
   deleteFile,
@@ -87,15 +88,29 @@ function getProtected(req, res) {
   });
 }
 
-function getUpload(req, res) {
+async function getUpload(req, res) {
+  const id = parseInt(req.params.id);
   res.render("upload", {
     title: "Upload a File",
+    folderId: id,
+    errors: [{ msg: req.flash("error") }],
   });
 }
 
-function postUpload(req, res) {
-  console.log("upload succesfully");
-  res.json(req.file);
+async function postUpload(req, res) {
+  const folderId = parseInt(req.params.id);
+  try {
+    const { filename, destination, size } = req.file;
+    // console.log(filename, destination, size);
+
+    await createFile(folderId, filename, destination, size);
+    // console.log("upload succesfully", file);
+    res.redirect(`/folders/${folderId}/`);
+  } catch (err) {
+    console.error("Error creating file", err);
+    req.flash("error", "File already exists");
+    res.redirect(`/folders/${folderId}/upload`);
+  }
 }
 
 async function getFolders(req, res, next) {

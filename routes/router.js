@@ -1,6 +1,7 @@
 const { Router } = require("express");
-const passport = require("passport");
 const router = Router();
+const path = require("path");
+const multer = require("multer");
 
 const {
   getIndex,
@@ -10,27 +11,29 @@ const {
   postSignUp,
   getProtected,
   logOut,
-  getUpload,
-  postUpload,
   getFolders,
   postFolders,
   getDeleteFolder,
   getUpdateFolder,
   postUpdateFolder,
+  getFolderDetails,
+} = require("../controllers/appController");
+const {
   getUpdateFile,
   postUpdateFile,
   getFileDelete,
-  getFolderDetails,
-} = require("../controllers/appController");
-const multer = require("multer");
+  getUpload,
+  postUpload,
+} = require("../controllers/fileController");
+
 // const upload = multer({ dest: "uploads/" });
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, path.join(__dirname, "../uploads"));
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
@@ -54,7 +57,12 @@ function ensureAuthenticated(req, res, next) {
 
 router.get("/protected", ensureAuthenticated, getProtected);
 router.get("/folders/:id/upload", ensureAuthenticated, getUpload);
-router.post("/folders/:id/upload", upload.single("file"), postUpload);
+router.post(
+  "/folders/:id/upload",
+  ensureAuthenticated,
+  upload.single("file"),
+  postUpload
+);
 
 router.get("/folders", ensureAuthenticated, getFolders);
 router.post("/folders", postFolders);

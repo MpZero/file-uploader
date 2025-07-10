@@ -8,8 +8,7 @@ const passport = require("passport");
 const session = require("express-session");
 const flash = require("connect-flash");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+const prisma = require("./prisma");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

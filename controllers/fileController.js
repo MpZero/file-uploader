@@ -1,9 +1,8 @@
 const {
-  createFile,
   updateFile,
   readFile,
-  deleteFile,
-} = require("../queries/queries");
+  createFileDB,
+} = require("../queries/fileQueries");
 const { uploadFileToSupabase } = require("./supabaseController");
 
 async function getUpdateFile(req, res) {
@@ -41,17 +40,14 @@ async function postUpdateFile(req, res) {
 }
 
 async function getFileDelete(req, res) {
-  // console.log(req.user);
-  // console.log(req.params);
-
   try {
     const folderId = req.params.folderId;
     const fileId = req.params.id;
-    await deleteFile(parseInt(fileId));
+    // await deleteFileFr(parseInt(fileId));
     res.redirect(`/folders/${folderId}`);
   } catch (err) {
     console.error("Error deleting file", err);
-    req.flash("error", "File already delete or File doesn't exist");
+    req.flash("error", "File already deleted or File doesn't exist");
     res.redirect(`/folders/${folderId}`);
   }
 }
@@ -74,14 +70,12 @@ async function postUpload(req, res) {
 
   const folderId = parseInt(req.params.id);
   try {
-    // const { filename, destination, size } = req.file;
-    // console.log(filename, destination, size);
-    //SUPABASE
-    const destination = await uploadFileToSupabase(req.file, folderId);
-    // console.log("supabase", req.file, folderId);
+    const { publicUrl, filename } = await uploadFileToSupabase(
+      req.file,
+      folderId
+    );
 
-    await createFile(folderId, req.file.filename, destination, req.file.size);
-    // console.log("upload succesfully", file);
+    await createFileDB(folderId, filename, publicUrl, req.file.size);
     res.redirect(`/folders/${folderId}/`);
   } catch (err) {
     console.error("Error creating file", err);

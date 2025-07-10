@@ -1,10 +1,11 @@
 const LocalStrategy = require("passport-local").Strategy;
 const passport = require("passport");
 const { validPassword } = require("../utils/passwordUtils");
-const { PrismaClient } = require("@prisma/client");
-const { findUser } = require("../queries/queries");
+const { findUser } = require("../queries/userQueries");
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
+const prisma = require("../prisma");
+
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });

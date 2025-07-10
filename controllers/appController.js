@@ -1,13 +1,13 @@
 const {
-  findUser,
-  createUser,
   readFolders,
   createFolders,
   deleteFolder,
   readFolder,
   updateFolder,
 } = require("../queries/queries");
+const { findUser, createUser } = require("../queries/userQueries");
 const { validPassword } = require("../utils/passwordUtils");
+const { deleteFilesFromSupabase } = require("./supabaseController");
 
 function getIndex(req, res) {
   res.render("index");
@@ -88,8 +88,10 @@ async function getFolders(req, res, next) {
   try {
     const username = req.user.username;
     const id = req.user.id;
+    console.log({ username, id });
+
     const folders = await readFolders(id);
-    // console.log(`folders`, folders);
+    console.log(`folders`, folders);
 
     if (folders.length === 0) {
       res.render("folders", {
@@ -130,13 +132,17 @@ async function postFolders(req, res) {
 
 async function getDeleteFolder(req, res) {
   try {
-    // console.log(req.params.id);
-    const folderId = req.params.id;
-    await deleteFolder(parseInt(folderId));
-    res.redirect("/folders");
+    const folderId = parseInt(req.params.id);
+    console.log(`getdeletefolder`, folderId);
+
+    await deleteFilesFromSupabase(folderId);
+
+    await deleteFolder(folderId);
+
+    res.redirect(`/folders`);
   } catch (err) {
-    console.error("Error deleting folder", err);
-    req.flash("error", "Folder already deleted or Folder doesn't exist");
+    console.error("Error eliminando folder:", err);
+    req.flash("error", "No se pudo eliminar la carpeta");
     res.redirect("/folders");
   }
 }

@@ -1,36 +1,46 @@
+const { folder } = require("../prisma");
 const {
   updateFile,
   readFile,
   createFileDB,
 } = require("../queries/fileQueries");
-const { uploadFileToSupabase } = require("./supabaseController");
+const {
+  uploadFileToSupabase,
+  updateFileSupabase,
+} = require("./supabaseController");
 
 async function getUpdateFile(req, res) {
   const fileId = req.params.id;
   const file = await readFile(parseInt(fileId));
   // console.log(file);
 
-  try {
-    res.render("fileUpdate", {
-      title: file.filename,
-      file: file,
-      errors: [{ msg: req.flash("error") }],
-    });
-  } catch (err) {
-    console.error("Error updating file", err);
-    req.flash("error", "Unable to update file");
-    res.redirect(`/folders/${file.folderId}`);
-  }
+  res.render("fileUpdate", {
+    title: file.filename,
+    file: file,
+    errors: [{ msg: req.flash("error") }],
+    // success: [{ msg: req.flash("success") }],
+  });
 }
 
 async function postUpdateFile(req, res) {
   const fileId = req.params.id;
-  const newName = req.body.newName;
   const file = await readFile(parseInt(fileId));
   const folderId = file.folderId;
+  const newName = req.body.newName;
+  const oldName = file.filename;
+  const oldPath = folderId + "/" + oldName;
+  const newPath = folderId + "/" + newName;
 
   try {
-    await updateFile(parseInt(fileId), newName);
+    const { publicUrl } = await updateFileSupabase(
+      oldPath,
+      file.filename,
+      newPath
+    );
+    console.log(`destination`, publicUrl);
+
+    await updateFile(parseInt(fileId), newName, publicUrl);
+    // req.flash("success", "File name updated successfully");
     res.redirect(`/folders/${folderId}/file/${fileId}/update`);
   } catch (err) {
     console.error("Error updating file", err);

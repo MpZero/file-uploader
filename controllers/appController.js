@@ -7,7 +7,7 @@ const {
 } = require("../queries/queries");
 const { findUser, createUser } = require("../queries/userQueries");
 const { validPassword } = require("../utils/passwordUtils");
-const { deleteFilesFromSupabase } = require("./supabaseController");
+const { removeFilesFromSupabase } = require("./supabaseController");
 
 function getIndex(req, res) {
   res.render("index");
@@ -135,7 +135,7 @@ async function getDeleteFolder(req, res) {
     const folderId = parseInt(req.params.id);
     console.log(`getdeletefolder`, folderId);
 
-    await deleteFilesFromSupabase(folderId);
+    await removeFilesFromSupabase(folderId);
 
     await deleteFolder(folderId);
 

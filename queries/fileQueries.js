@@ -42,12 +42,13 @@ async function readFile(id) {
   }
 }
 
-async function updateFile(id, newName, next) {
+async function updateFile(id, newName, destination, next) {
   try {
     await prisma.file.update({
       where: { id: id },
       data: {
         filename: newName,
+        destination: destination,
       },
     });
   } catch (error) {

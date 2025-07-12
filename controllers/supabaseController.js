@@ -27,11 +27,9 @@ async function uploadFileToSupabase(file, folderId) {
   };
 }
 
-// ----------------------------------------------
-
-async function removeFilesFromSupabase(folderId) {
+async function removeFolderSupabase(folderId) {
   const files = await readAllFiles(folderId);
-  console.log(`removeFilesFromSupabase`, files);
+  console.log(`removeFolderSupabase`, files);
 
   if (!files || files.length === 0) {
     console.log("This folder has no files.");
@@ -55,9 +53,9 @@ async function removeFilesFromSupabase(folderId) {
 }
 
 async function updateFileSupabase(oldPath, filename, newPath) {
-  console.log(`oldpath`, oldPath);
-  console.log(`filename`, filename);
-  console.log(`new path`, newPath);
+  // console.log(`oldpath`, oldPath);
+  // console.log(`filename`, filename);
+  // console.log(`new path`, newPath);
 
   //copy old file with new name
   const { error: copyError } = await supabase.storage
@@ -82,9 +80,20 @@ async function updateFileSupabase(oldPath, filename, newPath) {
   };
 }
 
-// module.exports = { uploadFileToSupabase };
+async function removeFileSupabase(path) {
+  // console.log(`removeFileSupabase`, path);
+  const { error } = await supabase.storage.from("user-storage").remove([path]);
+
+  if (error) {
+    console.error("Error deleting storage files:", error);
+    throw error;
+  }
+  console.log("Files deleted:", path);
+}
+
 module.exports = {
   uploadFileToSupabase,
-  removeFilesFromSupabase,
+  removeFolderSupabase,
   updateFileSupabase,
+  removeFileSupabase,
 };

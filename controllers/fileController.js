@@ -3,10 +3,12 @@ const {
   updateFile,
   readFile,
   createFileDB,
+  removeFileDB,
 } = require("../queries/fileQueries");
 const {
   uploadFileToSupabase,
   updateFileSupabase,
+  removeFileSupabase,
 } = require("./supabaseController");
 
 async function getUpdateFile(req, res) {
@@ -50,10 +52,14 @@ async function postUpdateFile(req, res) {
 }
 
 async function getFileDelete(req, res) {
+  const fileId = parseInt(req.params.id);
+  const file = await readFile(fileId);
+  const folderId = req.params.folderId;
+  const filename = file.filename;
+  const path = `${folderId}/${filename}`;
   try {
-    const folderId = req.params.folderId;
-    const fileId = req.params.id;
-    // await deleteFileFr(parseInt(fileId));
+    await removeFileSupabase(path);
+    await removeFileDB(fileId);
     res.redirect(`/folders/${folderId}`);
   } catch (err) {
     console.error("Error deleting file", err);

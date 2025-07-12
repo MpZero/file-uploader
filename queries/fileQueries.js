@@ -62,7 +62,7 @@ async function deleteAllFilesFromDB(folderId) {
   });
 }
 
-async function deleteFileFromDB(id, next) {
+async function removeFileDB(id, next) {
   try {
     await prisma.file.delete({
       where: { id: id },
@@ -79,6 +79,6 @@ module.exports = {
   readFile,
   readAllFiles,
   updateFile,
-  deleteFileFromDB,
+  removeFileDB,
   deleteAllFilesFromDB,
 };

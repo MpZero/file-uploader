@@ -1,4 +1,3 @@
-const { folder } = require("../prisma");
 const {
   updateFile,
   readFile,
@@ -9,7 +8,46 @@ const {
   uploadFileToSupabase,
   updateFileSupabase,
   removeFileSupabase,
+  downloadFile,
 } = require("./supabaseController");
+
+const { Readable } = require("stream");
+
+/////////////////////////////////////////////////
+/*-------------- UPLOAD LOGIC ---------------- */
+/////////////////////////////////////////////////
+
+async function getUpload(req, res) {
+  const id = parseInt(req.params.id);
+  res.render("upload", {
+    title: "Upload a File",
+    folderId: id,
+    errors: [{ msg: req.flash("error") }],
+  });
+}
+
+async function postUpload(req, res) {
+  console.log("REQ.FILE >>>", req.file);
+
+  const folderId = parseInt(req.params.id);
+  try {
+    const { publicUrl, filename } = await uploadFileToSupabase(
+      req.file,
+      folderId
+    );
+
+    await createFileDB(folderId, filename, publicUrl, req.file.size);
+    res.redirect(`/folders/${folderId}/`);
+  } catch (err) {
+    console.error("Error creating file", err);
+    req.flash("error", "File already exists");
+    res.redirect(`/folders/${folderId}/upload`);
+  }
+}
+
+/////////////////////////////////////////////////
+/*-------------- UPLOAD LOGIC ---------------- */
+/////////////////////////////////////////////////
 
 async function getUpdateFile(req, res) {
   const fileId = req.params.id;
@@ -68,46 +106,49 @@ async function getFileDelete(req, res) {
   }
 }
 
-/////////////////////////////////////////////////
-/*-------------- UPLOAD LOGIC ---------------- */
-/////////////////////////////////////////////////
+async function getFileDownload(req, res) {
+  const fileId = parseInt(req.params.id);
+  const folderId = req.params.folderId;
 
-async function getUpload(req, res) {
-  const id = parseInt(req.params.id);
-  res.render("upload", {
-    title: "Upload a File",
-    folderId: id,
-    errors: [{ msg: req.flash("error") }],
-  });
-}
-
-async function postUpload(req, res) {
-  console.log("REQ.FILE >>>", req.file);
-
-  const folderId = parseInt(req.params.id);
   try {
-    const { publicUrl, filename } = await uploadFileToSupabase(
-      req.file,
-      folderId
-    );
+    const file = await readFile(fileId);
+    if (!file) {
+      req.flash("error", "File not found");
+      return res.redirect(`/folders/${folderId}`);
+    }
 
-    await createFileDB(folderId, filename, publicUrl, req.file.size);
-    res.redirect(`/folders/${folderId}/`);
+    const supabasePath = `${folderId}/${file.filename}`;
+    const { data: blob, error } = await downloadFile(supabasePath);
+
+    if (error) {
+      console.error("Error downloading file:", error);
+      req.flash("error", "Error downloading the file");
+      return res.redirect(`/folders/${folderId}`);
+    }
+
+    //make the blob readable
+    const stream = Readable.fromWeb(blob.stream());
+
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${file.filename}"`
+    );
+    res.setHeader("Content-Type", file.mimetype || "application/octet-stream");
+
+    //send to the client
+    stream.pipe(res);
   } catch (err) {
-    console.error("Error creating file", err);
-    req.flash("error", "File already exists");
-    res.redirect(`/folders/${folderId}/upload`);
+    console.error("Error inside getFileDownload:", err);
+    req.flash("error", "Couldn't download the file");
+    res.redirect(`/folders/${folderId}`);
   }
 }
 
-/////////////////////////////////////////////////
-/*-------------- UPLOAD LOGIC ---------------- */
-/////////////////////////////////////////////////
-
 module.exports = {
-  getUpdateFile,
-  postUpdateFile,
-  getFileDelete,
   getUpload,
   postUpload,
+  getUpdateFile,
+  postUpdateFile,
+  getFileDownload,
+  getFileDelete,
 };

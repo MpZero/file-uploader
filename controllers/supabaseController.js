@@ -85,10 +85,25 @@ async function removeFileSupabase(path) {
   const { error } = await supabase.storage.from("user-storage").remove([path]);
 
   if (error) {
-    console.error("Error deleting storage files:", error);
+    console.error("Error deleting storage file:", error);
     throw error;
   }
-  console.log("Files deleted:", path);
+  console.log("File deleted:", path);
+}
+
+async function downloadFile(path) {
+  console.log(`Searching Supabase for:`, path);
+
+  const { data, error } = await supabase.storage
+    .from("user-storage")
+    .download(path);
+
+  if (error) {
+    console.error("Supabase .download() error:", error);
+    return { error };
+  }
+
+  return { data };
 }
 
 module.exports = {
@@ -96,4 +111,5 @@ module.exports = {
   removeFolderSupabase,
   updateFileSupabase,
   removeFileSupabase,
+  downloadFile,
 };

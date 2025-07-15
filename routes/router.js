@@ -24,6 +24,7 @@ const {
   getFileDelete,
   getUpload,
   postUpload,
+  getFileDownload,
 } = require("../controllers/fileController");
 
 // const upload = multer({ dest: "uploads/" });
@@ -78,6 +79,12 @@ router.post(
   "/folders/:id/file/:id/update",
   ensureAuthenticated,
   postUpdateFile
+);
+
+router.get(
+  "/folders/:folderId/file/:id/download",
+  ensureAuthenticated,
+  getFileDownload
 );
 router.get(
   "/folders/:folderId/file/:id/delete",

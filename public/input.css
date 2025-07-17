@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-roboto-condensed: "Roboto Condensed", sans-serif;
+  --font-sansation: "Sansation", sans-serif;
+}
+/* @theme {
+  --color-text-50: #eceef8;
+  --color-text-100: #daddf1;
+  --color-text-200: #b4bbe4;
+  --color-text-300: #8f99d6;
+  --color-text-400: #6977c9;
+  --color-text-500: #4456bb;
+  --color-text-600: #364496;
+  --color-text-700: #293370;
+  --color-text-800: #1b224b;
+  --color-text-900: #0e1125;
+  --color-text-950: #070913;
+
+  --color-bgc-50: #eceef8;
+  --color-bgc-100: #dadef1;
+  --color-bgc-200: #b5bce3;
+  --color-bgc-300: #8f9bd6;
+  --color-bgc-400: #6a7ac8;
+  --color-bgc-500: #4558ba;
+  --color-bgc-600: #374795;
+  --color-bgc-700: #293570;
+  --color-bgc-800: #1c234a;
+  --color-bgc-900: #0e1225;
+  --color-bgc-950: #070913;
+
+  --color-pry-50: #fcf8e8;
+  --color-pry-100: #f9f1d2;
+  --color-pry-200: #f4e4a4;
+  --color-pry-300: #eed677;
+  --color-pry-400: #e9c949;
+  --color-pry-500: #e3bb1c;
+  --color-pry-600: #b69616;
+  --color-pry-700: #887011;
+  --color-pry-800: #5b4b0b;
+  --color-pry-900: #2d2506;
+  --color-pry-950: #171303;
+
+  --color-sry-50: #e6f8fe;
+  --color-sry-100: #cdf0fe;
+  --color-sry-200: #9be1fd;
+  --color-sry-300: #69d2fc;
+  --color-sry-400: #37c3fb;
+  --color-sry-500: #05b5fa;
+  --color-sry-600: #0490c8;
+  --color-sry-700: #036c96;
+  --color-sry-800: #024864;
+  --color-sry-900: #012432;
+  --color-sry-950: #011219;
+
+  --color-acc-50: #eafaec;
+  --color-acc-100: #d5f6d8;
+  --color-acc-200: #abedb2;
+  --color-acc-300: #82e38b;
+  --color-acc-400: #58da65;
+  --color-acc-500: #2ed13e;
+  --color-acc-600: #25a732;
+  --color-acc-700: #1c7d25;
+  --color-acc-800: #125419;
+  --color-acc-900: #092a0c;
+  --color-acc-950: #051506;
+} */

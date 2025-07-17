@@ -4,14 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Message App</title>
+    <!-- <link rel="stylesheet" href="../public/output.css" /> -->
+    <link rel="stylesheet" href="output.css" />
   </head>
-  <body>
-    <main>
-      <h1>File Uploader</h1>
-      <div>
-        <a href="/log-in">Log in</a>
-        <a href="/sign-up">Sign up</a>
-        <a href="/protected">protected</a>
+  <body class="text-white font-sansation">
+    <main
+      class="flex flex-col bg-stone-800 min-h-dvh text-center text-xl md:text-2xl lg:text-3xl"
+    >
+      <div class="font-bold p-4 pt-8 pb-16">
+        <h1>File Uploader 📂</h1>
+      </div>
+      <div class="flex flex-col gap-3 px-2">
+        <p>Nice to see you! 👋</p>
+        <a
+          class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg mb-4"
+          href="/log-in"
+          ><span
+            class="grow p-4 rounded-sm border-b-8 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg"
+            >Log in</span
+          ></a
+        >
+        <p>Not a user? Create your account 👇</p>
+        <a
+          class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg"
+          href="/sign-up"
+          ><span
+            class="grow p-4 rounded-sm border-b-8 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg"
+            >Sign up</span
+          ></a
+        >
       </div>
     </main>
   </body>

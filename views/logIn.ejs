@@ -7,23 +7,53 @@
 
     <title><%= title%></title>
   </head>
-  <body>
-    <main>
-      <h1>Log In</h1>
-      <div>
+  <body class="text-white font-sansation">
+    <main
+      class="flex flex-col bg-stone-800 min-h-dvh text-center text-sm md:text-md lg:text-1xl"
+    >
+      <div class="font-bold p-4 pt-8 pb-12 text-3xl">
+        <h1>Log In 🔓</h1>
+      </div>
+      <div class="flex flex-col px-2">
         <%- include('partials/errors') %>
-        <h1 class="text-3xl font-bold underline">Hello world!</h1>
 
-        <form action="/log-in" method="POST">
-          <label for="username">Username: </label>
-          <input type="text" name="username" id="username" required />
-          <label for="password">Password: </label>
-          <input type="password" name="password" id="password" required />
-          <button type="submit">Submit</button>
+        <form class="flex flex-col gap-3 mb-8" action="/log-in" method="POST">
+          <label class="font-mono" for="username">Username </label>
+          <input
+            class="text-black p-1 bg-white rounded-sm mb-1 self-center w-full max-w-sm lg:max-w-lg"
+            type="text"
+            name="username"
+            id="username"
+            required
+          />
+          <label class="font-mono" for="password">Password </label>
+          <input
+            class="text-black p-1 bg-white rounded-sm mb-1 self-center w-full max-w-sm lg:max-w-lg"
+            type="password"
+            name="password"
+            id="password"
+            required
+          />
+          <button
+            class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg"
+            type="submit"
+          >
+            <span
+              class="grow p-2 rounded-sm border-b-8 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg cursor-pointer"
+              >Submit</span
+            >
+          </button>
         </form>
-        <div>
-          <p>Not a User?</p>
-          <a href="/sign-up">Sign up</a>
+        <div class="flex flex-col gap-3">
+          <p>Not a user? Create an account! 📝👈</p>
+          <a
+            class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg"
+            href="/sign-up"
+            ><span
+              class="grow p-2 rounded-sm border-b-8 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg"
+              >Sign up</span
+            ></a
+          >
         </div>
       </div>
     </main>

@@ -9,16 +9,24 @@
   </head>
   <body class="text-white font-sansation">
     <main
-      class="flex flex-col bg-stone-800 min-h-dvh text-center text-sm md:text-md lg:text-1xl"
+      class="flex flex-col bg-stone-800 min-h-dvh text-center text-sm md:text-md lg:text-3xl"
     >
-      <div class="font-bold p-4 pt-8 pb-12 text-3xl">
+      <div class="font-bold p-4 pt-8 pb-12 text-3xl lg:text-6xl">
         <h1>Log In 🔓</h1>
       </div>
-      <div class="flex flex-col px-2">
+      <div class="px-2">
         <%- include('partials/errors') %>
 
-        <form class="flex flex-col gap-3 mb-8" action="/log-in" method="POST">
-          <label class="font-mono" for="username">Username </label>
+        <form
+          class="flex flex-col gap-1.5 mb-8 font-mono"
+          action="/log-in"
+          method="POST"
+        >
+          <label
+            class="self-center w-full max-w-sm lg:max-w-lg text-left"
+            for="username"
+            >Username
+          </label>
           <input
             class="text-black p-1 bg-white rounded-sm mb-1 self-center w-full max-w-sm lg:max-w-lg"
             type="text"
@@ -26,16 +34,20 @@
             id="username"
             required
           />
-          <label class="font-mono" for="password">Password </label>
+          <label
+            class="self-center w-full max-w-sm lg:max-w-lg text-left"
+            for="password"
+            >Password
+          </label>
           <input
-            class="text-black p-1 bg-white rounded-sm mb-1 self-center w-full max-w-sm lg:max-w-lg"
+            class="text-black p-1 bg-white rounded-sm self-center w-full max-w-sm lg:max-w-lg"
             type="password"
             name="password"
             id="password"
             required
           />
           <button
-            class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg"
+            class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg mt-2"
             type="submit"
           >
             <span

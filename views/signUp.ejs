@@ -3,30 +3,79 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="output.css" />
     <title><%= title%></title>
   </head>
-  <body>
-    <main>
-      <h1>Sign Up</h1>
-      <div>
+  <body class="text-white font-sansation">
+    <main
+      class="flex flex-col bg-stone-800 min-h-dvh text-center text-sm md:text-md lg:text-3xl"
+    >
+      <div class="font-bold p-4 pt-8 pb-12 text-3xl lg:text-6xl">
+        <h1>Sign Up 📝</h1>
+      </div>
+      <div class="px-2">
         <%- include('partials/errors') %>
-        <form action="/sign-up" method="POST">
-          <label for="username">Username: </label>
-          <input type="text" name="username" id="username" required />
-          <label for="password">Password: </label>
-          <input type="password" name="password" id="password" required />
-          <label for="confirmPassword">Confirm Password: </label>
+        <form
+          class="flex flex-col gap-1.5 mb-8 font-mono"
+          action="/sign-up"
+          method="POST"
+        >
+          <label
+            class="self-center w-full max-w-sm lg:max-w-lg text-left"
+            for="username"
+            >Username:
+          </label>
           <input
+            class="text-black p-1 bg-white rounded-sm mb-1 self-center w-full max-w-sm lg:max-w-lg"
+            type="text"
+            name="username"
+            id="username"
+            required
+          />
+          <label
+            class="self-center w-full max-w-sm lg:max-w-lg text-left"
+            for="password"
+            >Password:
+          </label>
+          <input
+            class="text-black p-1 bg-white rounded-sm mb-1 self-center w-full max-w-sm lg:max-w-lg"
+            type="password"
+            name="password"
+            id="password"
+            required
+          />
+          <label
+            class="self-center w-full max-w-sm lg:max-w-lg text-left"
+            for="confirmPassword"
+            >Confirm Password:
+          </label>
+          <input
+            class="text-black p-1 bg-white rounded-sm mb-1 self-center w-full max-w-sm lg:max-w-lg"
             type="password"
             name="confirmPassword"
             id="confirmPassword"
             required
           />
-          <button type="submit">Submit</button>
+          <button
+            class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg mt-2"
+            type="submit"
+          >
+            <span
+              class="grow p-2 rounded-sm border-b-8 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg cursor-pointer"
+              >Submit</span
+            >
+          </button>
         </form>
-        <div>
-          <p>Already a User?</p>
-          <a href="/log-in">Log In</a>
+        <div class="flex flex-col gap-3 max-sm:text-xs">
+          <p>Not a user? Create an account! 📝👈</p>
+          <a
+            class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg"
+            href="/log-in"
+            ><span
+              class="grow p-2 rounded-sm border-b-8 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg"
+              >Log In</span
+            ></a
+          >
         </div>
       </div>
     </main>

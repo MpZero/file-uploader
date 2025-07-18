@@ -3,30 +3,72 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="output.css" />
     <title><%= title %></title>
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <ul>
-      <%folders.map((folder) => { %>
-
-      <li><a href="/folders/<%=folder.id %>"><%= folder.name %></a></li>
-
-      <% }); %>
-    </ul>
-    <%- include('partials/errors') %>
-
-    <h2>Add a Folder</h2>
-    <form action="/folders" method="post">
-      <label for="folderName"> </label>
-      <input
-        type="text"
-        placeholder="Folder name"
-        name="folderName"
-        id="folderName"
-        required
-      />
-      <button type="submit">Create Folder</button>
-    </form>
+  <body class="text-white font-sansation">
+    <main
+      class="flex flex-col bg-stone-800 min-h-dvh text-center text-sm md:text-md lg:text-3xl"
+    >
+      <div class="px-2">
+        <div class="font-bold p-4 pt-8 pb-12 text-lg lg:text-6xl">
+          <p>Welcome to</p>
+          <p>File Uploader 📂</p>
+        </div>
+        <div class="flex flex-col font-mono">
+          <div class="mb-2">
+            <p class="bg-stone-700 rounded-sm p-1">Add a folder</p>
+          </div>
+          <form action="/folders" method="post">
+            <label for="folderName"> </label>
+            <input
+              class="text-black p-1 bg-white rounded-sm mb-1 self-center w-full max-w-sm lg:max-w-lg"
+              type="text"
+              placeholder="Folder name"
+              name="folderName"
+              id="folderName"
+              required
+            />
+            <button
+              class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg mt-2"
+              type="submit"
+            >
+              <span
+                class="grow p-2 rounded-sm border-b-8 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg cursor-pointer"
+                >Create folder</span
+              >
+            </button>
+          </form>
+        </div>
+        <div class="mt-2 text-left font-roboto-condensed">
+          <div class="flex mb-1">
+            <p
+              class="hover:bg-stone-700 p-1 h-full cursor-pointer rounded-sm w-full"
+            >
+              Name 🔽
+            </p>
+            <p
+              class="hover:bg-stone-700 p-1 h-full cursor-pointer rounded-sm w-full text-right"
+            >
+              View ⊞
+            </p>
+          </div>
+          <ul class="flex flex-col">
+            <%folders.map((folder) => { %>
+            <li class="flex gap-2 hover:*:bg-stone-700">
+              <!-- <li class="flex gap-2 border border-black"> -->
+              <a
+                class="w-full p-2 pl-1 rounded-sm transition-all duration-250 linear shadow-md text-shadow-lg truncate"
+                class="border border-black"
+                href="/folders/<%=folder.id %>"
+                >📁 <%= folder.name %></a
+              >
+            </li>
+            <% }); %>
+          </ul>
+        </div>
+        <%- include('partials/errors') %>
+      </div>
+    </main>
   </body>
 </html>

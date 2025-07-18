@@ -16,13 +16,18 @@
           <p>File Uploader 📂</p>
         </div>
         <div class="flex flex-col font-mono">
-          <div class="mb-2">
-            <p class="bg-stone-700 rounded-sm p-1">Add a folder</p>
-          </div>
-          <form action="/folders" method="post">
-            <label for="folderName"> </label>
+          <form
+            class="flex flex-col md:grid grid-cols-2 grid-rows-2 gap-1"
+            action="/folders"
+            method="post"
+          >
+            <label
+              class="bg-stone-700 rounded-sm p-1 self-center w-full max-w-sm md:max-w-full lg:max-w-lg md:col-span-2"
+              for="folderName"
+              >Add a folder
+            </label>
             <input
-              class="text-black p-1 bg-white rounded-sm mb-1 self-center w-full max-w-sm lg:max-w-lg"
+              class="p-1 text-black bg-white rounded-sm mb-1 self-center w-full max-w-sm md:p-3 md:m-0 md:row-start-2 md:min-w-full lg:max-w-lg"
               type="text"
               placeholder="Folder name"
               name="folderName"
@@ -30,7 +35,7 @@
               required
             />
             <button
-              class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg mt-2"
+              class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg mt-2 md:row-start-2 md:mt-0 md:min-w-full"
               type="submit"
             >
               <span
@@ -43,12 +48,12 @@
         <div class="mt-2 text-left font-roboto-condensed">
           <div class="flex mb-1">
             <p
-              class="hover:bg-stone-700 p-1 h-full cursor-pointer rounded-sm w-full"
+              class="hover:bg-stone-700 p-1 h-full cursor-pointer rounded-sm w-full md:p-2"
             >
               Name 🔽
             </p>
             <p
-              class="hover:bg-stone-700 p-1 h-full cursor-pointer rounded-sm w-full text-right"
+              class="hover:bg-stone-700 p-1 h-full cursor-pointer rounded-sm w-full md:p-2 text-right"
             >
               View ⊞
             </p>
@@ -56,10 +61,8 @@
           <ul class="flex flex-col">
             <%folders.map((folder) => { %>
             <li class="flex gap-2 hover:*:bg-stone-700">
-              <!-- <li class="flex gap-2 border border-black"> -->
               <a
-                class="w-full p-2 pl-1 rounded-sm transition-all duration-250 linear shadow-md text-shadow-lg truncate"
-                class="border border-black"
+                class="w-full p-2 pl-1 rounded-sm transition-all duration-250 linear text-shadow-lg truncate"
                 href="/folders/<%=folder.id %>"
                 >📁 <%= folder.name %></a
               >

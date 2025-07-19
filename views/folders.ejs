@@ -8,26 +8,34 @@
   </head>
   <body class="text-white font-sansation">
     <main
-      class="flex flex-col bg-stone-800 min-h-dvh text-center text-sm md:text-md lg:text-3xl"
+      class="bg-stone-800 min-h-dvh text-center md:text-md lg:text-3xl xl:text-4xl"
     >
-      <div class="px-2">
-        <div class="font-bold p-4 pt-8 pb-12 text-lg lg:text-6xl">
-          <p>Welcome to</p>
-          <p>File Uploader 📂</p>
+      <div class="px-2 lg:grid grid-cols-4">
+        <div
+          class="font-bold p-4 pt-8 text-xl lg:text-4xl col-span-full xl:text-6xl"
+        >
+          <div
+            class="flex gap-2.5 pb-2 justify-center md: border-b border-stone-700"
+          >
+            <p>Welcome to</p>
+            <p>File Uploader 📂</p>
+          </div>
         </div>
-        <div class="flex flex-col font-mono">
+        <div
+          class="flex flex-col font-mono lg:col-start-1 lg:px-1 lg:border-r lg:border-stone-600"
+        >
           <form
-            class="flex flex-col md:grid grid-cols-2 grid-rows-2 gap-1"
+            class="flex flex-col gap-1 md:grid grid-cols-2 lg:flex lg:gap-4 lg:px-0.5 lg:pt-0"
             action="/folders"
             method="post"
           >
             <label
-              class="bg-stone-700 rounded-sm p-1 self-center w-full max-w-sm md:max-w-full lg:max-w-lg md:col-span-2"
+              class="bg-stone-700 rounded-sm p-1 self-center w-full md:col-span-2"
               for="folderName"
               >Add a folder
             </label>
             <input
-              class="p-1 text-black bg-white rounded-sm mb-1 self-center w-full max-w-sm md:p-3 md:m-0 md:row-start-2 md:min-w-full lg:max-w-lg"
+              class="p-1 text-black bg-white rounded-sm mb-1 self-center md:p-3 md:m-0 md:row-start-2 w-full"
               type="text"
               placeholder="Folder name"
               name="folderName"
@@ -35,7 +43,7 @@
               required
             />
             <button
-              class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg mt-2 md:row-start-2 md:mt-0 md:min-w-full"
+              class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full mt-2 md:row-start-2 md:mt-0"
               type="submit"
             >
               <span
@@ -44,8 +52,44 @@
               >
             </button>
           </form>
+          <div
+            class="flex flex-col gap-1 items-start pr-0.5 pt-8 text-2xl xl:text-4xl"
+          >
+            <p
+              class="hidden lg:block cursor-pointer grow w-full text-left pl-12 p-4 hover:bg-stone-700 rounded-sm transition-all duration-250 linear"
+            >
+              🖴 My drive
+            </p>
+            <p
+              class="hidden lg:block cursor-pointer grow w-full text-left pl-12 p-4 hover:bg-stone-700 rounded-sm transition-all duration-250 linear"
+            >
+              👥 Shared
+            </p>
+            <p
+              class="hidden lg:block cursor-pointer grow w-full text-left pl-12 p-4 hover:bg-stone-700 rounded-sm transition-all duration-250 linear"
+            >
+              🕓 Recent
+            </p>
+            <p
+              class="hidden lg:block cursor-pointer grow w-full text-left pl-12 p-4 hover:bg-stone-700 rounded-sm transition-all duration-250 linear"
+            >
+              ⭐ Starred
+            </p>
+            <p
+              class="hidden lg:block cursor-pointer grow w-full text-left pl-12 p-4 hover:bg-stone-700 rounded-sm transition-all duration-250 linear"
+            >
+              🗑️ Bin
+            </p>
+            <p
+              class="hidden lg:block cursor-pointer grow w-full text-left pl-12 p-4 hover:bg-stone-700 rounded-sm transition-all duration-250 linear"
+            >
+              ☁️ Storage
+            </p>
+          </div>
         </div>
-        <div class="mt-2 text-left font-roboto-condensed">
+        <div
+          class="mt-2 text-left font-roboto-condensed lg:col-span-3 lg:mt-0 lg:pl-1"
+        >
           <div class="flex mb-1">
             <p
               class="hover:bg-stone-700 p-1 h-full cursor-pointer rounded-sm w-full md:p-2"
@@ -70,7 +114,9 @@
             <% }); %>
           </ul>
         </div>
-        <%- include('partials/errors') %>
+        <div class="lg:col-start-2 col-span-full">
+          <%- include('partials/errors') %>
+        </div>
       </div>
     </main>
   </body>

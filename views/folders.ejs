@@ -12,7 +12,7 @@
     >
       <div class="px-2 lg:grid grid-cols-4">
         <div
-          class="font-bold p-4 pt-8 text-xl lg:text-4xl col-span-full xl:text-6xl"
+          class="font-bold py-4 text-md lg:text-4xl col-span-full xl:text-6xl"
         >
           <div
             class="flex gap-2.5 pb-2 justify-center md: border-b border-stone-700"
@@ -55,49 +55,20 @@
           <div
             class="flex flex-col gap-1 items-start pr-0.5 pt-8 text-2xl xl:text-4xl"
           >
-            <p
-              class="hidden lg:block cursor-pointer grow w-full text-left pl-12 p-4 hover:bg-stone-700 rounded-sm transition-all duration-250 linear"
-            >
-              🖴 My drive
-            </p>
-            <p
-              class="hidden lg:block cursor-pointer grow w-full text-left pl-12 p-4 hover:bg-stone-700 rounded-sm transition-all duration-250 linear"
-            >
-              👥 Shared
-            </p>
-            <p
-              class="hidden lg:block cursor-pointer grow w-full text-left pl-12 p-4 hover:bg-stone-700 rounded-sm transition-all duration-250 linear"
-            >
-              🕓 Recent
-            </p>
-            <p
-              class="hidden lg:block cursor-pointer grow w-full text-left pl-12 p-4 hover:bg-stone-700 rounded-sm transition-all duration-250 linear"
-            >
-              ⭐ Starred
-            </p>
-            <p
-              class="hidden lg:block cursor-pointer grow w-full text-left pl-12 p-4 hover:bg-stone-700 rounded-sm transition-all duration-250 linear"
-            >
-              🗑️ Bin
-            </p>
-            <p
-              class="hidden lg:block cursor-pointer grow w-full text-left pl-12 p-4 hover:bg-stone-700 rounded-sm transition-all duration-250 linear"
-            >
-              ☁️ Storage
-            </p>
+            <%- include('partials/navbar') %>
           </div>
         </div>
         <div
           class="mt-2 text-left font-roboto-condensed lg:col-span-3 lg:mt-0 lg:pl-1"
         >
-          <div class="flex mb-1">
+          <div class="flex mb-1 gap-1">
             <p
-              class="hover:bg-stone-700 p-1 h-full cursor-pointer rounded-sm w-full md:p-2"
+              class="bg-stone-700 hover:bg-stone-600 p-1 h-full cursor-pointer rounded-sm w-full md:p-2"
             >
               Name 🔽
             </p>
             <p
-              class="hover:bg-stone-700 p-1 h-full cursor-pointer rounded-sm w-full md:p-2 text-right"
+              class="bg-stone-700 hover:bg-stone-600 p-1 h-full cursor-pointer rounded-sm w-full md:p-2 text-right"
             >
               View ⊞
             </p>

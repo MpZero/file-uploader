@@ -3,34 +3,85 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/output.css">
     <title><%= title %></title>
   </head>
-  <body>
-    <h1><%= folder.name %></h1>
-    <%- include('partials/errors') %>
-
-    <ul>
-      <li>Created: <%= folder.createdAt.toLocaleString() %></a></li>
-      <li><a href="/folders/<%= folder.id%>/upload">Upload a file</a></li>
-      <li><a href="/folders/<%= folder.id%>/update">Update this folder</a></li>
-      <li><a href="/folders/<%= folder.id%>/delete">Delete this folder</a></li>
-      <% if(files.length !== 0) { %>
-      <ul>Files:
-        <% files.map((data) => { %>
-          <!-- <li><%= data.id %></li> -->
-          <li><%= data.filename %></li>
-          <li><%=data.destination %></li>
-          <li><%=data.size%> kb </li>
-          <li><%=data.createdAt.toLocaleString() %></li>
-          <li><a href="/folders/<%=folder.id%>/file/<%= data.id%>/update">Update File</a></li>
-          <li><a href="/folders/<%=folder.id%>/file/<%= data.id%>/download">Download File</a></li>
-          <li><a href="/folders/<%=folder.id%>/file/<%= data.id%>/delete">Remove</a></li>
-       <%}) %>
-      </ul>
-     <% } %>
+<body class="text-white font-sansation">
+    <main
+      class="flex flex-col gap-1 px-1 bg-stone-800 min-h-dvh text-center text-xs  md:text-xl lg:grid grid-cols-4 lg:text-2xl"
+      >
+      <div class="flex justify-between border-b p-1 border-stone-400  col-span-full  ">
+        <div class="flex gap-1 items-center">
+          <a class="p-1 rounded-sm cursor-pointer hover:bg-stone-700" href="/folders">⬅ </a>
+            <h1 class="font-bold p-1"><%= folder.name %></h1>
+            <p class="p-1 font-bold"> <%= folder.createdAt.toLocaleString() %>
+        </p>
+        </div>
+        <div class="flex gap-1 items-center">
+          <p class="p-1 rounded-sm cursor-pointer hover:bg-stone-700">🔎</p>
+          <p class="p-1 rounded-sm cursor-pointer hover:bg-stone-700">⋮</p>
+          </div>
+        </div>
       
-    </ul>
-      <a href="/folders">Back</a>
+        <div
+          class=" hidden font-mono lg:flex flex-col gap-1 items-start  p-1 border-r border-gray-400 text-2xl xl:text-xl lg:col-end-2"
+        >
+          <%- include('partials/navbar') %>
+        </div>
+        <!-- </div> -->
+       <div class="lg:col-start-2 col-span-full">
+         <div class="flex py-1 gap-1 text-xs md:text-lg lg:col-start-2 col-span-full lg:text-xl">
+          <a class="flex   rounded-sm w-full  hover:*:-translate-y-0.5 hover:*:bg-amber-500 hover:*:border-yellow-700 " href="/folders/<%= folder.id%>/upload">
+            <span class="grow p-1 rounded border-b-4 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg cursor-pointer">Upload file</span></a>
+          <a class="flex  rounded w-full  hover:*:-translate-y-0.5 hover:*:bg-amber-500 hover:*:border-yellow-700 " href="/folders/<%= folder.id%>/update">
+            <span class="grow p-1 rounded border-b-4 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg cursor-pointer">Update folder</span></a>
+          <a class="flex  rounded w-full  hover:*:-translate-y-0.5 hover:*:bg-amber-500 hover:*:border-yellow-700 " href="/folders/<%= folder.id%>/delete">
+            <span class="grow  p-1 rounded border-b-4 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg cursor-pointer">Delete folder</span></a>
+          </div>
+          <div class="flex gap-1 text-xs lg:text-xl col-start-2 col-span-full">
+            <p
+              class="bg-stone-700 hover:bg-stone-600 p-1 cursor-pointer  rounded-sm w-full text-left"
+            >
+              Name 🔽
+            </p>
+            <p
+              class="bg-stone-700 hover:bg-stone-600 p-1  cursor-pointer rounded-sm w-full  text-right"
+            >
+              View ⊞
+            </p>
+          </div>
+             <%- include('partials/errors') %>
+             
+               
+               <div class="lg:col-start-2 col-span-full">
+          <% if(files.length !== 0) { %>
+          <ul class=" text-xs lg:text-lg flex flex-col gap-1 font-roboto-condensed">
+            <% files.map((data) => { %>
+              <!-- <li><%= data.id %></li> -->
+              <!-- <li><%=data.destination %></li> -->
+              <div class="flex   justify-between  border-b-1 border-stone-400 py-1">
+                <div class="grid grid-cols-2 text-left pl-1">
+                    <li class="col-span-2"><p><%= data.filename %></p></li>
+                    <li class="col-start-1" ><p><%=data.size%> kb </p></li>
+                    <li class="col-start-2" ><p><%=data.createdAt.toDateString() %></p></li>
+                </div>
+                <div class="flex gap-1 ">
+                  <li class=" flex hover:*:-translate-y-0.5 hover:*:bg-amber-400 hover:*:border-yellow-600  "><a class=" p-2 rounded border-b-4 text-shadow-md shadow-md               border-amber-600  cursor-pointer   bg-amber-500
+                  transition-all duration-350 ease-in-out
+                  md:p-4 lg:p-6" href="/folders/<%=folder.id%>/file/<%= data.id%>/update"> ✏️</a></li>
+                  <li class=" flex hover:*:-translate-y-0.5 hover:*:bg-green-400 hover:*:border-green-600 "><a class="p-2 rounded border-b-4 text-shadow-md border-green-600  cursor-pointer   bg-green-500
+                  transition-all duration-350 ease-in-out
+                  md:p-4 lg:p-6" href="/folders/<%=folder.id%>/file/<%= data.id%>/download">⤵️</a></li>
+                  <li class=" flex  hover:*:-translate-y-0.5 hover:*:bg-red-400 hover:*:border-red-600 "><a class="p-2 rounded border-b-4 text-shadow-md border-red-600  cursor-pointer   bg-red-500 transition-all duration-350 ease-in-out md:p-4 lg:p-6" href="/folders/<%=folder.id%>/file/<%= data.id%>/delete">🗑️</a></li>
+                </div>
+              </div>
+           <%}) %>
+          </ul>
+               <% } %>
+              </ul>
+               </div>
+       </div>
+     
 
 
     

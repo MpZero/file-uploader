@@ -3,21 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/output.css" />
     <title>Upload a file</title>
   </head>
-  <body>
-    <h1>Upload a file</h1>
-
-    <%- include('partials/errors') %>
-    <form
-      action="/folders/<%= folderId%>/upload"
-      enctype="multipart/form-data"
-      method="post"
-    >
-      <div class="form-group">
-        <input type="file" class="form-control-file" name="file" />
-        <input type="submit" value="Upload File" />
+  <body class="text-white">
+    <main class="flex flex-col bg-stone-800 min-h-dvh">
+      <div class="px-1 text-xl font-bold text-center md:text-md xl:text-3xl">
+        <h1 class="py-2 border-b border-gray-400">File Uploader 📂</h1>
+        <h2 class="font-bold p-4 pt-8 pb-16">Upload your file</h2>
       </div>
-    </form>
+      <%- include('partials/errors') %>
+      <form
+        class="flex flex-col items-center text-xs gap-2 p-2 md:text-sm md:w-1/2 md:mx-auto lg:w-2/3 xl:text-xl"
+        action="/folders/<%= folderId%>/upload"
+        enctype="multipart/form-data"
+        method="post"
+      >
+        <span
+          class="flex hover:*:file:bg-amber-500 hover:*:border-yellow-700 w-full"
+        >
+          <input
+            type="file"
+            name="file"
+            class="file:bg-yellow-500 file:p-2 file:rounded-sm file:border-b-4 file:border-yellow-700 file:cursor-pointer bg-stone-700 rounded-sm file:transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg cursor-pointer p-1 w-full text-ellipsis xl:file:px-6"
+          />
+        </span>
+
+        <button
+          type="submit"
+          class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 min-w-full"
+        >
+          <span
+            class="grow p-2 rounded-sm border-b-8 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg cursor-pointer min-w-full xl:p-6"
+            >Upload file</span
+          >
+        </button>
+      </form>
+    </main>
   </body>
 </html>

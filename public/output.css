@@ -278,11 +278,26 @@
   .resize {
     resize: both;
   }
+  .auto-rows-auto {
+    grid-auto-rows: auto;
+  }
+  .auto-rows-fr {
+    grid-auto-rows: minmax(0, 1fr);
+  }
+  .auto-rows-max {
+    grid-auto-rows: max-content;
+  }
+  .auto-rows-min {
+    grid-auto-rows: min-content;
+  }
   .grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .grid-rows-2 {
+    grid-template-rows: repeat(2, minmax(0, 1fr));
   }
   .flex-col {
     flex-direction: column;
@@ -889,6 +904,41 @@
   .lg\:max-w-lg {
     @media (width >= 64rem) {
       max-width: var(--container-lg);
+    }
+  }
+  .lg\:auto-rows-\[auto_1fr\] {
+    @media (width >= 64rem) {
+      grid-auto-rows: auto 1fr;
+    }
+  }
+  .lg\:auto-rows-\[minmax\(0\,1fr\)\] {
+    @media (width >= 64rem) {
+      grid-auto-rows: minmax(0,1fr);
+    }
+  }
+  .lg\:auto-rows-\[minmax\(0\,2fr\)\] {
+    @media (width >= 64rem) {
+      grid-auto-rows: minmax(0,2fr);
+    }
+  }
+  .lg\:auto-rows-\[minmax\(auto\,1fr\)\] {
+    @media (width >= 64rem) {
+      grid-auto-rows: minmax(auto,1fr);
+    }
+  }
+  .lg\:auto-rows-auto {
+    @media (width >= 64rem) {
+      grid-auto-rows: auto;
+    }
+  }
+  .lg\:auto-rows-fr {
+    @media (width >= 64rem) {
+      grid-auto-rows: minmax(0, 1fr);
+    }
+  }
+  .lg\:auto-rows-max {
+    @media (width >= 64rem) {
+      grid-auto-rows: max-content;
     }
   }
   .lg\:gap-4 {

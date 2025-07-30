@@ -1,11 +1,9 @@
 <% if (locals.errors) {%>
-<div class="flex justify-center">
-  <ul
-    class="bg-stone-700 rounded-sm my-1 font-mono w-full max-w-sm lg:max-w-lg"
-  >
-    <% errors.forEach(function(error) { %>
-    <li><%= error.msg %></li>
-    <% }); %>
-  </ul>
-</div>
+<ul
+  class="min-w-full bg-stone-700 rounded-sm my-1 font-mono w-full max-w-sm lg:max-w-lg"
+>
+  <% errors.forEach(function(error) { %>
+  <li><%= error.msg %></li>
+  <% }); %>
+</ul>
 <% } %>

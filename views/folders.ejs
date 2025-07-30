@@ -8,17 +8,18 @@
   </head>
   <body class="text-white font-sansation">
     <main
-      class="bg-stone-800 min-h-dvh text-center md:text-md lg:text-3xl xl:text-4xl"
+      class="bg-stone-800 min-h-dvh text-center md:text-md lg:text-lg xl:text-2xl"
     >
       <div class="px-2 lg:grid grid-cols-4">
         <div
-          class="font-bold py-4 text-md lg:text-4xl col-span-full xl:text-6xl"
+          class="font-bold py-4 text-md lg:text-xl col-span-full xl:text-2xl"
         >
           <div
-            class="flex gap-2.5 pb-2 justify-center md: border-b border-stone-700"
+            class="flex gap-2.5 pb-2 text-left md: border-b border-stone-700"
           >
             <p>Welcome to</p>
-            <p>File Uploader 📂</p>
+            <p>File Uploader 📂,</p>
+            <p><%= username %></p>
           </div>
         </div>
         <div
@@ -52,8 +53,9 @@
               >
             </button>
           </form>
+          <div class="grow text-center"><%- include('partials/errors') %></div>
           <div
-            class="hidden font-mono lg:flex flex-col gap-1 items-start pr-0.5 pt-8 text-2xl xl:text-4xl"
+            class="hidden font-mono lg:flex flex-col gap-1 items-start pr-0.5 pt-8 md:text-md xl:text-xl"
           >
             <%- include('partials/navbar') %>
           </div>
@@ -74,7 +76,7 @@
             </p>
           </div>
           <ul class="flex flex-col">
-            <%folders.map((folder) => { %>
+            <% if (folders) { %> <%folders.map((folder) => { %>
             <li class="flex gap-2 hover:*:bg-stone-700">
               <a
                 class="w-full p-2 pl-1 rounded-sm transition-all duration-250 linear text-shadow-lg truncate"
@@ -82,11 +84,8 @@
                 >📁 <%= folder.name %></a
               >
             </li>
-            <% }); %>
+            <% }); %> <% }; %>
           </ul>
-        </div>
-        <div class="lg:col-start-2 col-span-full">
-          <%- include('partials/errors') %>
         </div>
       </div>
     </main>

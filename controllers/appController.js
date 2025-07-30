@@ -20,8 +20,6 @@ function getLogIn(req, res) {
 }
 
 async function postLogIn(req, res, next) {
-  // console.log(req.body);
-
   try {
     const { username, password } = req.body;
     const user = await findUser(username);
@@ -57,7 +55,6 @@ function getSignUp(req, res) {
 }
 
 async function postSignUp(req, res, next) {
-  // console.log(req.body);
   const { username, password, confirmPassword } = req.body;
 
   try {
@@ -75,27 +72,20 @@ async function postSignUp(req, res, next) {
     next(err);
   }
 
-  return res.redirect("/");
-}
-
-function getProtected(req, res) {
-  res.render("protected", {
-    title: "Protected Page",
-  });
+  return res.redirect("/sign-up");
 }
 
 async function getFolders(req, res, next) {
   try {
     const username = req.user.username;
     const id = req.user.id;
-    console.log({ username, id });
 
     const folders = await readFolders(id);
-    console.log(`folders`, folders);
 
     if (folders.length === 0) {
       res.render("folders", {
         title: `${username}'s Folders`,
+        username: username,
         folders: folders,
         errors: [{ msg: "No folders found!" }],
       });
@@ -105,11 +95,11 @@ async function getFolders(req, res, next) {
     res.render("folders", {
       title: `${username}'s Folders`,
       folders: folders,
+      username: username,
       errors: [{ msg: req.flash("error") }],
     });
   } catch (err) {
     console.error("Error getting folders", err);
-
     return next(err);
   }
 }
@@ -118,10 +108,8 @@ async function postFolders(req, res) {
   try {
     const userId = req.user.id;
     const folderName = req.body.folderName;
-    // console.log(userId, folderName);
 
-    const folders = await createFolders(userId, folderName);
-    // console.log(`folders`, folders);
+    await createFolders(userId, folderName);
     res.redirect("/folders");
   } catch (err) {
     console.error("Error creating folder", err);
@@ -133,7 +121,6 @@ async function postFolders(req, res) {
 async function getDeleteFolder(req, res) {
   try {
     const folderId = parseInt(req.params.id);
-    console.log(`getdeletefolder`, folderId);
 
     await removeFolderSupabase(folderId);
 
@@ -150,8 +137,6 @@ async function getDeleteFolder(req, res) {
 async function getFolderDetails(req, res) {
   try {
     const folder = await readFolder(parseInt(req.params.id));
-    // console.log(`getFolderDetails`, folder);
-    // console.log(folder.files);
     res.render("folderDetails", {
       title: folder.name,
       folder: folder,
@@ -165,13 +150,12 @@ async function getFolderDetails(req, res) {
 }
 
 async function getUpdateFolder(req, res) {
-  const folderId = req.params.id;
-  const folder = await readFolder(parseInt(req.params.id));
-  // console.log({ folderId, folder });
+  const folderId = parseInt(req.params.id);
+  const folder = await readFolder(folderId);
   try {
     res.render("folderUpdate", {
       title: folder.name,
-      folder: folder,
+      id: folder.id,
       errors: [{ msg: req.flash("error") }],
     });
   } catch (err) {
@@ -182,12 +166,21 @@ async function getUpdateFolder(req, res) {
 }
 
 async function postUpdateFolder(req, res) {
-  const folderId = req.params.id;
+  const folderId = parseInt(req.params.id);
   const newName = req.body.newName;
-  // console.log(folderId, newName);
+  const userFolders = await readFolders(req.user.id);
+  let arr = [];
+  userFolders.forEach((name) => {
+    arr.push(name.name);
+  });
 
   try {
-    await updateFolder(parseInt(req.params.id), newName);
+    if (arr.includes(newName)) {
+      console.error("Folder already exists");
+      req.flash("error", "Folder already exists");
+      return res.redirect(`/folders/${folderId}/update`);
+    }
+    await updateFolder(folderId, newName);
     res.redirect(`/folders/${folderId}`);
   } catch (err) {
     console.error("Error updating folder", err);
@@ -211,7 +204,6 @@ module.exports = {
   postLogIn,
   getSignUp,
   postSignUp,
-  getProtected,
   getFolders,
   postFolders,
   getUpdateFolder,

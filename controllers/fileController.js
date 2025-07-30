@@ -27,8 +27,6 @@ async function getUpload(req, res) {
 }
 
 async function postUpload(req, res) {
-  console.log("REQ.FILE >>>", req.file);
-
   const folderId = parseInt(req.params.id);
   try {
     const { publicUrl, filename } = await uploadFileToSupabase(
@@ -52,7 +50,6 @@ async function postUpload(req, res) {
 async function getUpdateFile(req, res) {
   const fileId = req.params.id;
   const file = await readFile(parseInt(fileId));
-  // console.log(file);
 
   res.render("fileUpdate", {
     title: file.filename,
@@ -68,8 +65,8 @@ async function postUpdateFile(req, res) {
   const folderId = file.folderId;
   const newName = req.body.newName;
   const oldName = file.filename;
-  const oldPath = folderId + "/" + oldName;
-  const newPath = folderId + "/" + newName;
+  const oldPath = `${folderId}/${oldName}`;
+  const newPath = `${folderId}/${newName}`;
 
   try {
     const { publicUrl } = await updateFileSupabase(
@@ -77,10 +74,8 @@ async function postUpdateFile(req, res) {
       file.filename,
       newPath
     );
-    console.log(`destination`, publicUrl);
 
     await updateFile(parseInt(fileId), newName, publicUrl);
-    // req.flash("success", "File name updated successfully");
     res.redirect(`/folders/${folderId}/file/${fileId}/update`);
   } catch (err) {
     console.error("Error updating file", err);

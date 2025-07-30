@@ -18,7 +18,6 @@ async function createUser(username, password) {
         password: await genPassword(password),
       },
     });
-    console.log(user);
   } catch (error) {
     console.log(error);
   }

@@ -9,7 +9,6 @@ const {
   postLogIn,
   getSignUp,
   postSignUp,
-  getProtected,
   logOut,
   getFolders,
   postFolders,
@@ -56,7 +55,6 @@ function ensureAuthenticated(req, res, next) {
   // res.redirect("/log-in");
 }
 
-router.get("/protected", ensureAuthenticated, getProtected);
 router.get("/folders/:id/upload", ensureAuthenticated, getUpload);
 router.post(
   "/folders/:id/upload",

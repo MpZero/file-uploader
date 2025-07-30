@@ -5,8 +5,6 @@ async function readFolders(id) {
     const folders = await prisma.folder.findMany({
       where: { userId: id },
     });
-    console.log(folders);
-
     return folders;
   } catch (error) {
     console.log(error);
@@ -26,7 +24,7 @@ async function readFolder(id) {
   }
 }
 
-async function createFolders(userId, folderName, next) {
+async function createFolders(userId, folderName) {
   try {
     await prisma.folder.create({
       data: {
@@ -34,27 +32,26 @@ async function createFolders(userId, folderName, next) {
         name: folderName,
       },
     });
+    return;
   } catch (error) {
     console.log(error);
-    next(error);
   }
 }
 
-async function updateFolder(id, newName, next) {
+async function updateFolder(folderId, newName) {
   try {
     await prisma.folder.update({
-      where: { id: id },
+      where: { id: folderId },
       data: {
         name: newName,
       },
     });
   } catch (error) {
     console.log(error);
-    next(error);
   }
 }
 
-async function deleteFolder(id, next) {
+async function deleteFolder(id) {
   try {
     await prisma.folder.delete({
       where: {
@@ -65,7 +62,6 @@ async function deleteFolder(id, next) {
     return;
   } catch (error) {
     console.log(error);
-    next(error);
   }
 }
 

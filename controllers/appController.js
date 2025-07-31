@@ -105,9 +105,19 @@ async function getFolders(req, res, next) {
 }
 
 async function postFolders(req, res) {
+  const userId = parseInt(req.user.id);
+  const folderName = req.body.folderName;
+  const userFolders = await readFolders(userId);
+  let arr = [];
+  userFolders.forEach((name) => {
+    arr.push(name.name);
+  });
   try {
-    const userId = req.user.id;
-    const folderName = req.body.folderName;
+    if (arr.includes(folderName)) {
+      console.error("Folder already exists");
+      req.flash("error", "Folder already exists");
+      return res.redirect(`/folders`);
+    }
 
     await createFolders(userId, folderName);
     res.redirect("/folders");

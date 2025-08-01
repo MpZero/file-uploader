@@ -37,6 +37,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 require("./passport/passport")(passport);
 app.use(flash());
+app.use("/favicon.ico", express.static("public/images/favicon.ico"));
 app.use("/", router);
 
 app.listen(process.env.PORT || 8000, () => {

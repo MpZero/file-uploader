@@ -4,19 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="output.css" />
+
     <title><%= title %></title>
   </head>
   <body class="text-white font-sansation">
     <main
-      class="bg-stone-800 min-h-dvh text-center md:text-md lg:text-lg xl:text-2xl"
+      class="bg-stone-800 min-h-dvh text-center xs:text-xs md:text-md lg:text-lg xl:text-2xl"
     >
-      <div class="px-2 lg:grid grid-cols-4">
+      <div class="px-2 lg:grid lg:grid-cols-4">
         <div
-          class="font-bold py-4 text-md lg:text-xl col-span-full xl:text-2xl"
+          class="font-bold py-4 text-sm md:text-md lg:text-xl col-span-full xl:text-2xl"
         >
-          <div
-            class="flex gap-2.5 pb-2 text-left md: border-b border-stone-700"
-          >
+          <div class="flex gap-1 pb-2 text-left border-b border-stone-700">
             <p>Welcome to</p>
             <p>File Uploader 📂,</p>
             <p><%= username %></p>

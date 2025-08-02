@@ -14,58 +14,38 @@
       <div class="font-bold p-4 pt-8 pb-12 text-3xl lg:text-6xl">
         <h1>Log In 🔓</h1>
       </div>
-      <div class="px-2">
+      <div class="px-2 flex flex-col self-center">
         <%- include('partials/errors') %>
 
         <form
-          class="flex flex-col gap-1.5 mb-8 font-mono"
+          class="flex flex-col gap-2 mb-8 font-mono"
           action="/log-in"
           method="POST"
         >
-          <label
-            class="self-center w-full max-w-sm lg:max-w-lg text-left"
-            for="username"
-            >Username
-          </label>
+          <label class="w-full text-left" for="username">Username </label>
           <input
-            class="text-black p-1 bg-white rounded-sm mb-1 self-center w-full max-w-sm lg:max-w-lg"
+            class="text-black p-1 bg-white rounded-sm mb-1 w-full"
             type="text"
             name="username"
             id="username"
             required
           />
-          <label
-            class="self-center w-full max-w-sm lg:max-w-lg text-left"
-            for="password"
-            >Password
-          </label>
+          <label class="w-full text-left" for="password">Password </label>
           <input
-            class="text-black p-1 bg-white rounded-sm self-center w-full max-w-sm lg:max-w-lg"
+            class="text-black p-1 bg-white rounded-sm w-full"
             type="password"
             name="password"
             id="password"
             required
           />
-          <button
-            class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg mt-2"
-            type="submit"
-          >
-            <span
-              class="grow p-2 rounded-sm border-b-8 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg cursor-pointer"
-              >Submit</span
-            >
-          </button>
+          <%- include('partials/submitBtn',{text: "Log in"}) %>
         </form>
         <div class="flex flex-col gap-3">
           <p>Not a user? Create an account! 📝👈</p>
-          <a
-            class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg"
-            href="/sign-up"
-            ><span
-              class="grow p-2 rounded-sm border-b-8 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg"
-              >Sign up</span
-            ></a
-          >
+          <div class="flex">
+            <%- include('partials/linkBtn',{text: signupBtn, link: signupLink})
+            %>
+          </div>
         </div>
       </div>
     </main>

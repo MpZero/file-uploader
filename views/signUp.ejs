@@ -13,69 +13,52 @@
       <div class="font-bold p-4 pt-6 pb-10 text-3xl lg:text-6xl">
         <h1>Sign Up 📝</h1>
       </div>
-      <div class="px-2">
+      <div class="flex flex-col gap-3 px-2 min-w-xs self-center">
         <%- include('partials/errors') %>
         <form
-          class="flex flex-col gap-1.5 mb-8 font-mono"
+          class="w-full flex flex-col items-center gap-1.5 mb-8 font-mono"
           action="/sign-up"
           method="POST"
         >
-          <label
-            class="self-center w-full max-w-sm lg:max-w-lg text-left"
-            for="username"
+          <label class="w-full max-w-sm lg:max-w-lg text-left" for="username"
             >Username:
           </label>
           <input
-            class="text-black p-1 bg-white rounded-sm mb-1 self-center w-full max-w-sm lg:max-w-lg"
+            class="text-black p-1 bg-white rounded-sm mb-1 w-full max-w-sm lg:max-w-lg"
             type="text"
             name="username"
             id="username"
             required
           />
-          <label
-            class="self-center w-full max-w-sm lg:max-w-lg text-left"
-            for="password"
+          <label class="w-full max-w-sm lg:max-w-lg text-left" for="password"
             >Password:
           </label>
           <input
-            class="text-black p-1 bg-white rounded-sm mb-1 self-center w-full max-w-sm lg:max-w-lg"
+            class="text-black p-1 bg-white rounded-sm mb-1 w-full max-w-sm lg:max-w-lg"
             type="password"
             name="password"
             id="password"
             required
           />
           <label
-            class="self-center w-full max-w-sm lg:max-w-lg text-left"
+            class="w-full max-w-sm lg:max-w-lg text-left"
             for="confirmPassword"
             >Confirm Password:
           </label>
           <input
-            class="text-black p-1 bg-white rounded-sm mb-1 self-center w-full max-w-sm lg:max-w-lg"
+            class="text-black p-1 bg-white rounded-sm mb-1 w-full max-w-sm lg:max-w-lg"
             type="password"
             name="confirmPassword"
             id="confirmPassword"
             required
           />
-          <button
-            class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg mt-2"
-            type="submit"
-          >
-            <span
-              class="grow p-2 rounded-sm border-b-8 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg cursor-pointer"
-              >Submit</span
-            >
-          </button>
+          <%- include('partials/submitBtn',{text: "Sign up"}) %>
         </form>
-        <div class="flex flex-col gap-3 max-sm:text-xs">
-          <p>Not a user? Create an account! 📝👈</p>
-          <a
-            class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full max-w-sm lg:max-w-lg"
-            href="/log-in"
-            ><span
-              class="grow p-2 rounded-sm border-b-8 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg"
-              >Log In</span
-            ></a
-          >
+        <div class="flex flex-col gap-3">
+          <p>Already a user? Log in!👇</p>
+          <div class="flex">
+            <%- include('partials/linkBtn',{text: loginBtn, link: loginLink}) %>
+          </div>
         </div>
       </div>
     </main>

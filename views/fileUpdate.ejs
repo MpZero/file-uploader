@@ -30,20 +30,10 @@
             name="newName"
             id="newName"
             required/>
-          <button
-            type="submit"
-            class="flex hover:*:bg-amber-500 hover:*:border-yellow-700 hover:*:-translate-y-0.5">
-            <span
-              class="grow p-1 rounded border-b-4 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-sm cursor-pointer">Update</span>
-          </button>
+          <%-include("partials/submitBtn", { text:"Update"})%>
         </form>
-        <a
-          href="/folders/<%=file.folderId %>"
-          class="flex hover:*:bg-amber-500 hover:*:border-yellow-700 hover:*:-translate-y-0.5">
-          <span
-            class="grow p-1 rounded border-b-4 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-sm cursor-pointer">Back
-          </span>
-        </a>
-      </main>
+        <div class="flex"><%-include("partials/linkBtn", {link: `/folders/${file.folderId }`, text:"Back"})%>
+      </div>
+    </main>
   </body>
 </html>

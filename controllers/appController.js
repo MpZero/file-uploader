@@ -10,12 +10,20 @@ const { validPassword } = require("../utils/passwordUtils");
 const { removeFolderSupabase } = require("./supabaseController");
 
 function getIndex(req, res) {
-  res.render("index");
+  res.render("index", {
+    loginBtn: "Log in",
+    loginLink: "/log-in",
+    signupBtn: "Sign up",
+    signupLink: "/sign-up",
+  });
 }
 
 function getLogIn(req, res) {
   res.render("logIn", {
     title: "Log-in",
+    signupBtn: "Sign up",
+    signupLink: "/sign-up",
+    signupLink: "/sign-up",
   });
 }
 
@@ -27,6 +35,9 @@ async function postLogIn(req, res, next) {
     if (!user) {
       return res.render("logIn", {
         title: "Log-in",
+        signupBtn: "Sign up",
+        signupLink: "/sign-up",
+        signupLink: "/sign-up",
         errors: [{ msg: "User does not exist" }],
       });
     }
@@ -35,6 +46,9 @@ async function postLogIn(req, res, next) {
     if (!isValid) {
       return res.render("logIn", {
         title: "Log-in",
+        signupBtn: "Sign up",
+        signupLink: "/sign-up",
+        signupLink: "/sign-up",
         errors: [{ msg: "Invalid password" }],
       });
     }
@@ -51,6 +65,8 @@ async function postLogIn(req, res, next) {
 function getSignUp(req, res) {
   res.render("signUp", {
     title: "Sign-Up",
+    loginBtn: "Log in",
+    loginLink: "/log-in",
   });
 }
 
@@ -61,6 +77,8 @@ async function postSignUp(req, res, next) {
     if (password !== confirmPassword) {
       return res.render("signUp", {
         title: "Sign-Up",
+        loginBtn: "Log in",
+        loginLink: "/log-in",
         errors: [{ msg: "Passwords do not match" }],
       });
     }

@@ -42,15 +42,7 @@
               id="folderName"
               required
             />
-            <button
-              class="flex hover:*:-translate-y-1.5 hover:*:bg-amber-500 hover:*:border-yellow-700 self-center w-full mt-2 md:row-start-2 md:mt-0"
-              type="submit"
-            >
-              <span
-                class="grow p-2 rounded-sm border-b-8 border-yellow-600 bg-yellow-500 transition-all duration-350 ease-in-out shadow-md font-extrabold text-shadow-lg cursor-pointer"
-                >Create folder</span
-              >
-            </button>
+            <%- include('partials/submitBtn',{text: "Create folder"}) %>
           </form>
           <div class="grow text-center"><%- include('partials/errors') %></div>
           <div

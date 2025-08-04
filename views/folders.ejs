@@ -13,13 +13,13 @@
     >
       <div class="px-2 lg:grid lg:grid-cols-4">
         <div
-          class="font-bold py-4 text-sm md:text-md lg:text-xl col-span-full xl:text-2xl"
+          class="flex justify-between items-center font-bold mb-4 py-2 text-sm md:text-md lg:text-xl col-span-full xl:text-2xl border-b border-stone-700"
         >
-          <div class="flex gap-1 pb-2 text-left border-b border-stone-700">
-            <p>Welcome to</p>
-            <p>File Uploader 📂,</p>
+          <div class="flex gap-1 text-left">
+            <p>Welcome to File Uploader 📂,</p>
             <p><%= username %></p>
           </div>
+          <div class="flex"><%- include('partials/burgerBtn') %></div>
         </div>
         <div
           class="flex flex-col font-mono lg:col-start-1 lg:px-1 lg:border-r lg:border-stone-600"

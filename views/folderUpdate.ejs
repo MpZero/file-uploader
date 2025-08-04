@@ -11,17 +11,24 @@
     <main
       class="flex flex-col bg-stone-800 min-h-dvh md:text-md lg:text-xl xl:text-2xl 2xl:text-5xl"
     >
-      <div
+
+    <div
+        class="flex justify-between items-center p-2 mx-1 border-b border-gray-400 xl:text-3xl lg:text-2xl 2xl:text-5xl font-bold"
+      >
+        <h1>File Uploader 📂</h1>
+        <div class="flex"><%- include('partials/burgerBtn') %></div>
+      </div>
+      <!-- <div
         class="px-1 xl:text-3xl lg:text-2xl 2xl:text-5xl font-bold text-center"
       >
-        <h1 class="py-2 border-b border-gray-400">File Uploader 📂</h1>
+        <h1 class="py-2 border-b border-gray-400">File Uploader 📂</h1> -->
+      </div>
         <h2
           class="flex flex-col gap-1 font-bold py-8 text-center lg:justify-center"
         >
           Current folder name:
           <p class="text-yellow-400"><%= title%></p>
         </h2>
-      </div>
 
       <div class="flex flex-col text-center gap-2 items-center font-mono">
         <div class="flex flex-col gap-3 px-2 max-w-xl self-center">

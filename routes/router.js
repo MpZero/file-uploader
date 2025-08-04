@@ -26,19 +26,8 @@ const {
   getFileDownload,
 } = require("../controllers/fileController");
 
-// const upload = multer({ dest: "uploads/" });
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../uploads"));
-  },
-  filename: function (req, file, cb) {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
-const upload = multer({ storage });
-
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 /////////ROUTES////////////
 
 router.get("/", getIndex);
@@ -51,11 +40,12 @@ router.post("/sign-up", postSignUp);
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) return next();
-  return res.json({ unathorized: "unauthorized" });
-  // res.redirect("/log-in");
+  req.flash("error", "You must log in first");
+  return res.redirect("/log-in");
 }
 
 router.get("/folders/:id/upload", ensureAuthenticated, getUpload);
+
 router.post(
   "/folders/:id/upload",
   ensureAuthenticated,
@@ -73,6 +63,7 @@ router.post("/folders/:id/update", ensureAuthenticated, postUpdateFolder);
 router.get("/folders/:id/delete", ensureAuthenticated, getDeleteFolder);
 
 router.get("/folders/:id/file/:id/update", ensureAuthenticated, getUpdateFile);
+
 router.post(
   "/folders/:id/file/:id/update",
   ensureAuthenticated,

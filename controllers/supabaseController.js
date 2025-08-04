@@ -1,16 +1,15 @@
-const fs = require("fs");
 const supabase = require("../supabase-client");
 const { readAllFiles } = require("../queries/fileQueries");
 
 async function uploadFileToSupabase(file, folderId) {
-  const fileBuffer = fs.readFileSync(file.path);
-
-  const uniqueFilename = `${Date.now()}-${file.originalname}`;
+  const uniqueFilename = `${Date.now()}${file.originalname}`;
   const supabasePath = `${folderId}/${uniqueFilename}`;
+
+  const buffer = Buffer.from(file.buffer);
 
   const { data, error } = await supabase.storage
     .from("user-storage")
-    .upload(supabasePath, fileBuffer, {
+    .upload(supabasePath, buffer, {
       contentType: file.mimetype,
     });
 
@@ -23,7 +22,6 @@ async function uploadFileToSupabase(file, folderId) {
   return {
     publicUrl: publicUrlData.publicUrl,
     filename: uniqueFilename,
-    path: supabasePath,
   };
 }
 

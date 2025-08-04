@@ -24,6 +24,7 @@ function getLogIn(req, res) {
     signupBtn: "Sign up",
     signupLink: "/sign-up",
     signupLink: "/sign-up",
+    errors: [{ msg: req.flash("error") }],
   });
 }
 
@@ -181,7 +182,7 @@ async function getUpdateFolder(req, res) {
   const folderId = parseInt(req.params.id);
   const folder = await readFolder(folderId);
   try {
-    res.render("folderUpdate", {
+    return res.render("folderUpdate", {
       title: folder.name,
       id: folder.id,
       errors: [{ msg: req.flash("error") }],
@@ -189,7 +190,7 @@ async function getUpdateFolder(req, res) {
   } catch (err) {
     console.error("Error updating folder", err);
     req.flash("error", "Unable to update folder");
-    res.redirect(`/folders/${folderId}`);
+    return res.redirect(`/folders/${folderId}`);
   }
 }
 
@@ -209,11 +210,11 @@ async function postUpdateFolder(req, res) {
       return res.redirect(`/folders/${folderId}/update`);
     }
     await updateFolder(folderId, newName);
-    res.redirect(`/folders/${folderId}`);
+    return res.redirect(`/folders/${folderId}`);
   } catch (err) {
     console.error("Error updating folder", err);
     req.flash("error", "Folder name already exists");
-    res.redirect(`/folders/${folderId}/update`);
+    return res.redirect(`/folders/${folderId}/update`);
   }
 }
 

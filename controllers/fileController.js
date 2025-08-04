@@ -50,13 +50,19 @@ async function postUpload(req, res) {
 async function getUpdateFile(req, res) {
   const fileId = req.params.id;
   const file = await readFile(parseInt(fileId));
+  const folderId = file.folderId;
 
-  res.render("fileUpdate", {
-    title: file.filename,
-    file: file,
-    errors: [{ msg: req.flash("error") }],
-    // success: [{ msg: req.flash("success") }],
-  });
+  try {
+    return res.render("fileUpdate", {
+      title: file.filename,
+      file: file,
+      errors: [{ msg: req.flash("error") }],
+    });
+  } catch (err) {
+    console.error("Error updating file", err);
+    req.flash("error", "Unable to update file");
+    return res.redirect(`/folders/${folderId}/file/${fileId}`);
+  }
 }
 
 async function postUpdateFile(req, res) {
@@ -69,18 +75,22 @@ async function postUpdateFile(req, res) {
   const newPath = `${folderId}/${newName}`;
 
   try {
+    if (newName === oldName) {
+      console.error("File already exists");
+      req.flash("error", "File name already exists");
+      return res.redirect(`/folders/${folderId}/file/${fileId}/update`);
+    }
     const { publicUrl } = await updateFileSupabase(
       oldPath,
       file.filename,
       newPath
     );
-
     await updateFile(parseInt(fileId), newName, publicUrl);
-    res.redirect(`/folders/${folderId}/file/${fileId}/update`);
+    return res.redirect(`/folders/${folderId}/file/${fileId}/update`);
   } catch (err) {
     console.error("Error updating file", err);
     req.flash("error", "File name already exists");
-    res.redirect(`/folders/${folderId}/file/${fileId}/update`);
+    return res.redirect(`/folders/${folderId}/file/${fileId}/update`);
   }
 }
 
